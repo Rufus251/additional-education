@@ -173,7 +173,6 @@ export default {
           newBlogs.push(blog)
         }
         this.blogs = newBlogs
-        console.log(this.blogs)
       } catch (error) {
         console.log(error);
       }
