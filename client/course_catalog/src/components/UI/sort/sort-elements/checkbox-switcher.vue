@@ -1,23 +1,31 @@
 <template>
   <label class="text1">
-    {{ first }}
-    <input type="checkbox" />
+    <slot name="first"></slot>
+    <input type="checkbox" v-model="checkbox" @change="emitCheckboxes"/>
     <span class="search-checkbox"></span>
-    {{ second }}
+    <slot name="second"></slot>
   </label>
 </template>
 <script>
 export default {
   name: "checkbox-switcher",
-  props: {
-    first: [String],
-    second: [String],
+  data(){
+    return{
+      checkbox: false
+    }
   },
+  methods:{
+    emitCheckboxes() {
+      this.$emit("update:modelValue", this.checkbox);
+    },
+  }
 };
 </script>
 <style scoped lang="scss">
-@import "../../../styles/main.scss";
+@import "@/styles/main.scss";
 label {
+  @media(max-width:420px){
+  }
   input {
     display: none;
   }
@@ -28,8 +36,8 @@ label {
   }
 }
 .search-checkbox {
-  margin-right: 43px;
-  margin-left: 2px;
+  margin-right: 42px;
+  margin-left: 4px;
   position: relative;
 
   &::before {
