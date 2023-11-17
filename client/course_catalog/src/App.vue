@@ -4,12 +4,20 @@
   </div>
   <div class="content">
     <CatalogComponent
-      v-if="courses && eduTypes && faculties && diplomType && courseAdditional"
+      v-if="
+        courses &&
+        eduTypes &&
+        faculties &&
+        diplomType &&
+        courseAdditional &&
+        courseToAdditional
+      "
       :courses="courses"
       :eduTypes="eduTypes"
       :faculties="faculties"
       :diplomType="diplomType"
       :courseAdditional="courseAdditional"
+      :courseToAdditional="courseToAdditional"
     ></CatalogComponent>
   </div>
 </template>
@@ -32,6 +40,7 @@ export default {
       faculties: false,
       diplomType: false,
       courseAdditional: false,
+      courseToAdditional: false,
     };
   },
   methods: {
@@ -41,18 +50,7 @@ export default {
         const courses = await axios.get(coursesLink);
 
         // this.courses = courses.data;
-        this.courses = []
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
-        this.courses.push(...courses.data);
+        this.courses = [];
         this.courses.push(...courses.data);
       } catch (error) {
         console.log(error);
@@ -99,6 +97,17 @@ export default {
         console.log(error);
       }
     },
+    async getCourseToAdditional() {
+      try {
+        const courseToAdditionalLink =
+          "http://localhost:3000/sort/courseToAdditional";
+        const courseToAdditional = await axios.get(courseToAdditionalLink);
+
+        this.courseToAdditional = courseToAdditional.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   async created() {
     await this.getCourses();
@@ -106,6 +115,7 @@ export default {
     await this.getFaculties();
     await this.getDiplomTypes();
     await this.getCourseAdditional();
+    await this.getCourseToAdditional();
   },
 };
 </script>
