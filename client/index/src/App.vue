@@ -11,9 +11,10 @@
     ></FindCource>
     <Advantages></Advantages>
     <LowPrice
-      v-if="faculties && lowPrice"
+      v-if="faculties && lowPrice && courses"
       :lowPrice="lowPrice"
       :faculty="faculties"
+      :courses="courses"
     ></LowPrice>
     <VideoLections
       v-if="videolections"
@@ -21,9 +22,10 @@
     ></VideoLections>
     <FormalitiesComponent></FormalitiesComponent>
     <PopularPrograms
-      v-if="faculties && popularCourses"
+      v-if="faculties && popularCourses && courses"
       :popularCourses="popularCourses"
       :faculty="faculties"
+      :courses="courses"
     ></PopularPrograms>
     <ProvidedTraining></ProvidedTraining>
     <OurManagers></OurManagers>
