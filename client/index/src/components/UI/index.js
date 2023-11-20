@@ -14,6 +14,8 @@ import TopMultisort from "./sort/sort-component/top-multisort.vue"
 import CheckboxSwitcher from "./sort/sort-elements/checkbox-switcher.vue"
 
 import CourseSlider from "./sliders/course-slider.vue"
+import DiplomSlider from "./sliders/diplom-slider.vue"
+import BlogSlider from "./sliders/blog-slider.vue"
 export default [
     WhiteButton225,
     WhiteBorderButton225,
@@ -26,4 +28,6 @@ export default [
     AsideCheckboxSort,
     CheckboxSwitcher,
     CourseSlider,
+    DiplomSlider,
+    BlogSlider
 ]
