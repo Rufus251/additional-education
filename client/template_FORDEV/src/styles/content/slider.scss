@@ -1,7 +1,8 @@
 .carousel {
+  margin-bottom: 134px;
   &__prev,
   &__next {
-    top: 105% !important;
+    top: calc(100% + 57px) !important;
 
     width: 57px;
     height: 57px;
