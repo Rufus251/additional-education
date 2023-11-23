@@ -42,9 +42,9 @@
           hide-details
         ></v-checkbox>
 
-        <blue-button-full :disabled="!valid" :href="`#`">
+        <BlueButtonFull :disabled="!valid" :href="`#`">
           Получить консультацию
-        </blue-button-full>
+        </BlueButtonFull>
       </v-form>
     </div>
   </div>

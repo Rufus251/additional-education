@@ -50,17 +50,15 @@
           hide-details
         ></v-checkbox>
 
-        <blue-button-full :href="`#`" :disabled="!valid">
+        <BlueButtonFull :href="`#`" :disabled="!valid">
           Получить консультацию
-        </blue-button-full>
+        </BlueButtonFull>
       </v-form>
     </div>
   </div>
 </template>
 
 <script>
-import BlueButtonFull from './UI/button-width-full/blue-button-full.vue';
-
 export default {
     data() {
         return {
@@ -75,7 +73,6 @@ export default {
             checkbox: false,
         };
     },
-    components: { BlueButtonFull }
 };
 </script>
 

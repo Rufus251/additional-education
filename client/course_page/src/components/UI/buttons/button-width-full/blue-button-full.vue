@@ -17,8 +17,8 @@
   export default {
     name:"BlueButtonFull",
     props:{
-      href: [String],
-      isDisabled: [Boolean]
+      href: String,
+      isDisabled: Boolean
     }
   };
   </script>
