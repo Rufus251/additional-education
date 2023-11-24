@@ -1,12 +1,14 @@
 <template>
     <v-btn
       flat
-      class="text-white text-none"
+      class="text-none"
+      variant="outlined"
       color="#3d8be4"
-      min-height="50px"
-      max-height="50px"
+      min-height="60px"
+      max-height="60px"
+      min-width="225px"
+      max-width="225px"
       :href="href"
-      :disabled="isDisabled"
       block
     >
       <slot></slot>
@@ -15,10 +17,9 @@
   
   <script>
   export default {
-    name:"BlueButtonFull",
+    name:"WhiteButton225",
     props:{
-      href: [String],
-      isDisabled: [Boolean]
+      href: [String]
     }
   };
   </script>

@@ -16,6 +16,8 @@ import CheckboxSwitcher from "./sort/sort-elements/checkbox-switcher.vue"
 import CourseSlider from "./sliders/course-slider.vue"
 import DiplomSlider from "./sliders/diplom-slider.vue"
 import BlogSlider from "./sliders/blog-slider.vue"
+
+import ManagerForm from "./forms/manager-form.vue"
 export default [
     WhiteButton225,
     WhiteBorderButton225,
@@ -29,5 +31,6 @@ export default [
     CheckboxSwitcher,
     CourseSlider,
     DiplomSlider,
-    BlogSlider
+    BlogSlider,
+    ManagerForm
 ]

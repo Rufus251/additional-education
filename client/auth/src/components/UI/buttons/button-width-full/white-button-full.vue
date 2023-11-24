@@ -1,12 +1,13 @@
 <template>
     <v-btn
       flat
-      class="text-white text-none"
+      class="text-none"
+      variant="outlined"
       color="#3d8be4"
       min-height="50px"
       max-height="50px"
-      :href="href"
       :disabled="isDisabled"
+      :href="href"
       block
     >
       <slot></slot>
@@ -15,11 +16,11 @@
   
   <script>
   export default {
-    name:"BlueButtonFull",
+    name:"WhiteButtonFull",
     props:{
       href: [String],
       isDisabled: [Boolean]
-    }
+    },
   };
   </script>
   
