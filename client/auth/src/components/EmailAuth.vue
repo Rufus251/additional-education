@@ -37,7 +37,13 @@
               variant="outlined"
               required
             ></v-text-field>
-            <BlueButtonFull :disabled="!validForm" @click="createUserByEmail(email, password)"> Далее </BlueButtonFull>
+            <p class="caption" v-if="errorMassage">{{ errorMassage }}</p>
+            <BlueButtonFull
+              :disabled="!validForm"
+              @click="createUserByEmail(email, password)"
+            >
+              Далее
+            </BlueButtonFull>
           </v-form>
         </div>
         <div class="policy">
@@ -57,6 +63,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      errorMassage: "",
       validForm: false,
       email: "",
       emailRules: [(v) => !!v || "Введите email!"],
@@ -65,20 +72,28 @@ export default {
     };
   },
   methods: {
-    async createUserByEmail(email, password){
-      try {
-        const createUserLink = "http://localhost:3000/auth/createEmail";
-        const res = await axios.post(createUserLink, {
+    async createUserByEmail(email, password) {
+      let errorMassage = this.errorMassage
+      const createUserLink = "http://localhost:3000/auth/createEmail";
+      await axios
+        .post(createUserLink, {
           email,
-          password
+          password,
+        })
+        .then(function (response) {
+          console.log(response);
+          errorMassage = "Пользователь создан"
+          // Сделать перелинковку на главную
+        })
+        .catch(function (error) {
+          console.log(error.response.status);
+          if (error.response.status == 403) {
+            console.log(errorMassage, "eror")
+            errorMassage = "Пользователь с таким e-mail уже существует";
+          }
         });
-
-        console.log(res)
-        // Сделать перелинковку на главную
-      } catch (error) {
-        console.log(error);
-      }
-    }
+        this.errorMassage = errorMassage
+    },
   },
 };
 </script>
@@ -141,7 +156,14 @@ export default {
     .v-form {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      justify-content: center;
+
+      .caption{
+        color: red;
+      }
+      .v-btn{
+        margin-top: 10px;
+      }
     }
 
     .policy {
