@@ -40,9 +40,15 @@
             <p class="caption" v-if="errorMassage">{{ errorMassage }}</p>
             <BlueButtonFull
               :disabled="!validForm"
+              @click="loginUserByEmail(email, password)"
+            >
+              Войти
+            </BlueButtonFull>
+            <BlueButtonFull
+              :disabled="!validForm"
               @click="createUserByEmail(email, password)"
             >
-              Далее
+              Зарегистрироваться
             </BlueButtonFull>
           </v-form>
         </div>
@@ -72,6 +78,28 @@ export default {
     };
   },
   methods: {
+    async loginUserByEmail(email, password){
+      let errorMassage = this.errorMassage
+      const loginUserLink = "http://localhost:3000/auth/loginEmail";
+      await axios
+        .post(loginUserLink, {
+          email,
+          password,
+        })
+        .then(function () {
+          errorMassage = "Вы вошли!"
+          // Сделать перелинковку на главную
+        })
+        .catch(function (error) {
+          if (error.response.status == 401) {
+            errorMassage = "Неверный пароль";
+          }
+          else if (error.response.status == 404) {
+            errorMassage = "Пользователь не найден";
+          }
+        });
+        this.errorMassage = errorMassage
+    },
     async createUserByEmail(email, password) {
       let errorMassage = this.errorMassage
       const createUserLink = "http://localhost:3000/auth/createEmail";
@@ -80,15 +108,12 @@ export default {
           email,
           password,
         })
-        .then(function (response) {
-          console.log(response);
+        .then(function () {
           errorMassage = "Пользователь создан"
           // Сделать перелинковку на главную
         })
         .catch(function (error) {
-          console.log(error.response.status);
           if (error.response.status == 403) {
-            console.log(errorMassage, "eror")
             errorMassage = "Пользователь с таким e-mail уже существует";
           }
         });
