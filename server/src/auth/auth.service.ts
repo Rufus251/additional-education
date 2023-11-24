@@ -117,6 +117,10 @@ export class AuthService {
                 }
             })
             
+            if (!user){
+                throw new HttpException('User Not Found', HttpStatus.NO_CONTENT)
+            }
+
             const correctPassword = bcrypt.compareSync(dto.password, user.password)
             if (correctPassword){
                 return user

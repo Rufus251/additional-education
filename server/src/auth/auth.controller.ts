@@ -49,8 +49,10 @@ export class AuthController {
 
     @UsePipes(new ValidationPipe())
     @Post("loginEmail")
+    @HttpCode(200)
     @ApiResponse({ status: 200, description: 'Return user'})
     @ApiResponse({ status: 401, description: 'Unauthorized, incorrect password'})
+    @ApiResponse({ status: 204, description: 'User Not Found'})
     async loginEmail(@Body() dto: LoginUserEmail){
         const res = this.authService.loginUserEmail(dto)
         return res
