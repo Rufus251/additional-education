@@ -68,7 +68,7 @@ export class AuthService {
             return res
 
         } catch (error) {
-            return error
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN); 
         }
     }
 

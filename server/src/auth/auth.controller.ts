@@ -23,8 +23,8 @@ export class AuthController {
 
     @UsePipes(new ValidationPipe())
     @Post("createEmail")
-    @HttpCode(201)
     @ApiResponse({ status: 201, description: 'Return user'})
+    @ApiResponse({ status: 403, description: 'Forbidden'})
     async createUserEmail(@Body() dto: CreateUserEmailDto){
         const res = this.authService.createUserEmail(dto)
         return res
