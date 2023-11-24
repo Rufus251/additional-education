@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { JwtService } from 'src/jwt/jwt.service';
 import { CreateUserPhoneDto } from './dto/create-user-phone.dto';
@@ -7,6 +7,7 @@ import { LoginUserPhone } from './dto/login-user-phone.dto';
 import { LoginUserEmail } from './dto/login-user-email.dto';
 import * as bcrypt from "bcrypt";
 import { CheckJwt } from './dto/check-jwt.dto';
+import { error } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -68,7 +69,7 @@ export class AuthService {
             return res
 
         } catch (error) {
-            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN); 
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
         }
     }
 
@@ -92,16 +93,16 @@ export class AuthService {
     async loginUserPhone(dto: LoginUserPhone) {
         try {
             const user = await this.databaseService.user.findFirst({
-                where:{
+                where: {
                     phoneNum: dto.phoneNum
                 }
             })
-            
+
             const correctPassword = bcrypt.compareSync(dto.password, user.password)
-            if (correctPassword){
+            if (correctPassword) {
                 return user
             }
-            else{
+            else {
                 throw new HttpException('Unauthorised', HttpStatus.UNAUTHORIZED)
             }
         } catch (error) {
@@ -112,23 +113,29 @@ export class AuthService {
     async loginUserEmail(dto: LoginUserEmail) {
         try {
             const user = await this.databaseService.user.findFirst({
-                where:{
+                where: {
                     email: dto.email
                 }
             })
-            
-            if (!user){
-                throw new HttpException('User Not Found', HttpStatus.NO_CONTENT)
+
+            if (!user) {
+                throw new HttpException('User Not Found', HttpStatus.NOT_FOUND)
             }
 
             const correctPassword = bcrypt.compareSync(dto.password, user.password)
-            if (correctPassword){
+            if (correctPassword) {
                 return user
             }
-            else{
-                throw new HttpException('Unauthorised', HttpStatus.UNAUTHORIZED)
+            else {
+                throw new HttpException('Incorrect Password', HttpStatus.UNAUTHORIZED)
             }
         } catch (error) {
+            if (error.status == 401) {
+                throw new HttpException('Incorrect Password', HttpStatus.UNAUTHORIZED)
+            }
+            else if (error.status == 404) {
+                throw new HttpException('User Not Found', HttpStatus.NOT_FOUND)
+            }
             return error
         }
     }
