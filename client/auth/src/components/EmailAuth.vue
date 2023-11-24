@@ -17,7 +17,7 @@
           </svg>
           <p class="text1">Назад</p>
         </div>
-        <h4>Войдите или зарегистрируйтесь по номеру телефона</h4>
+        <h4>Войдите или зарегистрируйтесь по e-mail</h4>
         <div class="form">
           <v-form v-model="validForm">
             <v-text-field
@@ -36,15 +36,7 @@
               variant="outlined"
               required
             ></v-text-field>
-            <v-btn
-              flat
-              color="#3d8be4"
-              min-height="60px"
-              min-width="180px"
-              block
-              :disabled="!validForm"
-              >Далее</v-btn
-            >
+            <BlueButtonFull :disabled="!validForm"> Далее </BlueButtonFull>
           </v-form>
         </div>
         <div class="policy">

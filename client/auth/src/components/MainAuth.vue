@@ -1,8 +1,6 @@
 <template>
-  <div class="bgColor">
-    <div class="logo">
-      <img src="./../assets/logo.png" alt="logo" />
-    </div>
+  <section class="bgColor">
+    <img class="logo" src="./../assets/logo.png" alt="logo" />
     <div class="centered">
       <div class="auth">
         <h4>Войдите или зарегистрируйтесь</h4>
@@ -63,7 +61,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script></script>
@@ -126,6 +124,10 @@
         flex-wrap: wrap;
 
         gap: 11px;
+      }
+      .images a:hover{
+        opacity: 0.8;
+        transition: 0.2s;
       }
     }
     .policy {

@@ -29,18 +29,18 @@
               variant="outlined"
               required
             ></v-text-field>
-            <v-btn
-              flat
-              color="#3d8be4"
-              min-height="60px"
-              min-width="180px"
-              block
-              :disabled="!validForm"
-              >Далее</v-btn
-            >
+            <v-text-field
+              class="w-100"
+              v-model="password"
+              :rules="passwordRules"
+              label="Пароль"
+              variant="outlined"
+              required
+            ></v-text-field>
+            <BlueButtonFull :disabled="!validForm">Далее</BlueButtonFull>
           </v-form>
         </div>
-        
+
         <div class="policy">
           <p class="caption">
             Регистрируясь в сервисе, принимаю условия
@@ -60,6 +60,8 @@ export default {
       validForm: false,
       phoneNumber: "",
       phoneNumberRules: [(v) => !!v || "Введите номер!"],
+      password: "",
+      passwordRules: [(v) => !!v || "Введите пароль!"],
     };
   },
   methods: {},
