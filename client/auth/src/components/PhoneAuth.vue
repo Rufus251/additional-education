@@ -33,6 +33,7 @@
               class="w-100"
               v-model="password"
               :rules="passwordRules"
+              type="password"
               label="Пароль"
               variant="outlined"
               required

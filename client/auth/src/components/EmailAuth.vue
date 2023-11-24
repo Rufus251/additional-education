@@ -32,11 +32,12 @@
               class="w-100"
               v-model="password"
               :rules="passwordRules"
+              type="password"
               label="Пароль"
               variant="outlined"
               required
             ></v-text-field>
-            <BlueButtonFull :disabled="!validForm"> Далее </BlueButtonFull>
+            <BlueButtonFull :disabled="!validForm" @click="createUserByEmail(email, password)"> Далее </BlueButtonFull>
           </v-form>
         </div>
         <div class="policy">
@@ -52,6 +53,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -62,7 +64,22 @@ export default {
       passwordRules: [(v) => !!v || "Введите пароль!"],
     };
   },
-  methods: {},
+  methods: {
+    async createUserByEmail(email, password){
+      try {
+        const createUserLink = "http://localhost:3000/auth/createEmail";
+        const res = await axios.post(createUserLink, {
+          email,
+          password
+        });
+
+        console.log(res)
+        // Сделать перелинковку на главную
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
 };
 </script>
 

@@ -1,6 +1,5 @@
 <template>
   <section class="bgColor">
-    <img class="logo" src="./../assets/logo.png" alt="logo" />
     <div class="centered">
       <div class="auth">
         <h4>Войдите или зарегистрируйтесь</h4>
@@ -70,17 +69,7 @@
 .bgColor {
   background-color: #F6F8F9;
   width: 100%;
-  height: 100vh;
-}
-.logo {
-  position: absolute;
-
-  top: 20px;
-  left: 30px;
-
-  @media (max-height: 630px) {
-    display: none;
-  }
+  height: 100%;
 }
 .centered {
   display: flex;
