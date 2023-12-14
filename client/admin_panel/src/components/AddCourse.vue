@@ -72,6 +72,8 @@ export default {
       EducationForm: "",
       CertificationType: "",
       AuthorInfo: ["", "", "", ""],
+
+      // 
     };
   },
 };
