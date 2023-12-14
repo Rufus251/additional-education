@@ -24,7 +24,7 @@
 <script>
 import NavBar from "./components/common/NavBar.vue";
 
-import AddCourse from "./components/AddCourse.vue";
+import AddCourse from "./components/AddCourse/AddCourse.vue";
 import AddTest from "./components/AddTest.vue";
 import AddVideolection from "./components/AddVideolection.vue";
 
