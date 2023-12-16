@@ -401,11 +401,14 @@ export class CourseService {
         return res
     }
 
-    async addTestQuestion(testId: number, dto: addTestQuestion) {
+    async addTestQuestion(testId: number, dto: addTestQuestion, file: Express.Multer.File) {
         try {
+            const imgUrl = await this.fileService.createImageFile(file)
             const res = await this.databaseService.testQuestion.create({
                 data: {
                     ...dto,
+                    queueNumber: +dto.queueNumber,
+                    questionImg: imgUrl,
                     testLesson: {
                         connect: {
                             id: testId

@@ -244,8 +244,9 @@ export class CourseController {
     @Post('addTestQuestion/:testId')
     @ApiResponse({ status: 200, description: 'Return testQuestion' })
     @UsePipes(new ValidationPipe())
-    async addTestQuestion(@Param('testId') testId: number, @Body() dto: addTestQuestion) {
-        const res = this.courseSerice.addTestQuestion(+testId, dto)
+    @UseInterceptors(AnyFilesInterceptor())
+    async addTestQuestion(@Param('testId') testId: number, @Body() dto: addTestQuestion, @UploadedFiles() files: Array<Express.Multer.File>) {
+        const res = this.courseSerice.addTestQuestion(+testId, dto, files[0])
         return res
     }
 
