@@ -5,7 +5,7 @@ import { changeCourseInfo } from './dto/change-course-info.dto';
 import { addSection } from './dto/add-section.dto';
 import { addAuthorInfo } from './dto/add-author-info.dto';
 import { addModule } from './dto/add-module.dto';
-import { addVideoLection } from './dto/add-video-lection.dto';
+import { addModuleVideoLection } from './dto/add-video-lection.dto';
 import { addLection } from './dto/add-lection.dto';
 import { addLectionBlock } from './dto/add-lection-block.dto';
 import { addTest } from './dto/add-test.dto';
@@ -238,7 +238,7 @@ export class CourseService {
         return res
     }
 
-    async addVideoLection(moduleId: number, dto: addVideoLection) {
+    async addVideoLection(moduleId: number, dto: addModuleVideoLection) {
         try {
             const res = await this.databaseService.videoLesson.create({
                 data: {

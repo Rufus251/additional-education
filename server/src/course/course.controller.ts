@@ -5,7 +5,7 @@ import { changeCourseInfo } from './dto/change-course-info.dto';
 import { addAuthorInfo } from './dto/add-author-info.dto';
 import { addSection } from './dto/add-section.dto';
 import { addModule } from './dto/add-module.dto';
-import { addVideoLection } from './dto/add-video-lection.dto';
+import { addModuleVideoLection } from './dto/add-video-lection.dto';
 import { addLectionBlock } from './dto/add-lection-block.dto';
 import { addLection } from './dto/add-lection.dto';
 import { addTest } from './dto/add-test.dto';
@@ -147,7 +147,7 @@ export class CourseController {
     @Post('addVideoLection/:moduleId')
     @ApiResponse({ status: 200, description: 'Return videoLection'})
     @UsePipes(new ValidationPipe())
-    async addVideoLection(@Param('moduleId') moduleId: number, @Body() dto: addVideoLection) {
+    async addVideoLection(@Param('moduleId') moduleId: number, @Body() dto: addModuleVideoLection) {
         const res = this.courseSerice.addVideoLection(+moduleId, dto)
         return res
     }
