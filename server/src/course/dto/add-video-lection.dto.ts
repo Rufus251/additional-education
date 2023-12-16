@@ -1,19 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import { IsNumber, IsString } from "class-validator";
 
 export class addModuleVideoLection {
 
     @IsNumber()
     @ApiProperty()
+    @Type(() => Number)
     queueNumber: number
 
     @IsString()
     @ApiProperty()
     lessonName: string
-
-    @IsString()
-    @ApiProperty()
-    videoUrl: string
 
     @IsString()
     @ApiProperty()
@@ -30,8 +28,4 @@ export class addModuleVideoLection {
     @IsString()
     @ApiProperty()
     homeworkDesription: string
-
-    @IsString()
-    @ApiProperty()
-    homeworkFile: string
 }

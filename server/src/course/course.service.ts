@@ -241,11 +241,18 @@ export class CourseService {
         return res
     }
 
-    async addVideoLection(moduleId: number, dto: addModuleVideoLection) {
+    async addVideoLection(moduleId: number, dto: addModuleVideoLection, files: Array<Express.Multer.File>) {
         try {
+            // two files, mp4 first, pdf second
+            const videoUrl = await this.fileService.createMP4File(files[0])
+            const homeworkUrl = await this.fileService.createPDFFile(files[1])
+
+            dto.queueNumber = +dto.queueNumber
             const res = await this.databaseService.videoLesson.create({
                 data: {
                     ...dto,
+                    videoUrl: videoUrl,
+                    homeworkFile: homeworkUrl,
                     module: {
                         connect: {
                             id: moduleId
