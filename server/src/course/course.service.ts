@@ -326,11 +326,13 @@ export class CourseService {
         return res
     }
 
-    async addLectionBlock(lectionId: number, dto: addLectionBlock) {
+    async addLectionBlock(lectionId: number, dto: addLectionBlock, file: Express.Multer.File) {
         try {
+            const imgUrl = await this.fileService.createImageFile(file)
             const res = await this.databaseService.lectionBlock.create({
                 data: {
                     ...dto,
+                    img: imgUrl,
                     lectionLesson: {
                         connect: {
                             id: lectionId

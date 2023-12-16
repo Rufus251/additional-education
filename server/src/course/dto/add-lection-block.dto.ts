@@ -11,9 +11,4 @@ export class addLectionBlock {
     @IsOptional()
     @ApiProperty({required: false})
     text: string
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({required: false})
-    img: string
 }

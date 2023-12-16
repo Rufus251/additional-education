@@ -198,8 +198,9 @@ export class CourseController {
     @Post('addLectionBlock/:lectionId')
     @ApiResponse({ status: 200, description: 'Return lectionBlock' })
     @UsePipes(new ValidationPipe())
-    async addLectionBlock(@Param('lectionId') lectionId: number, @Body() dto: addLectionBlock) {
-        const res = this.courseSerice.addLectionBlock(+lectionId, dto)
+    @UseInterceptors(AnyFilesInterceptor())
+    async addLectionBlock(@Param('lectionId') lectionId: number, @Body() dto: addLectionBlock, @UploadedFiles() files: Array<Express.Multer.File>) {
+        const res = this.courseSerice.addLectionBlock(+lectionId, dto, files[0])
         return res
     }
 
