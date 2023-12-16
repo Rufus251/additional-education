@@ -66,7 +66,6 @@ export class CourseService {
 
     async addCourse(dto: addCourse, file: Express.Multer.File) {
         try {
-            console.log(+dto.authorId, dto.authorId)
             const fileName = await this.fileService.createImageFile(file)
             const res = await this.databaseService.courses.create({
                 data: {

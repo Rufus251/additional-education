@@ -46,8 +46,6 @@ export class CourseController {
     @UsePipes(new ValidationPipe())
     @UseInterceptors(FileInterceptor('file'))
     async addCourse(@Body() dto: addCourse, @UploadedFile() file: Express.Multer.File ) {
-        console.log(dto)
-        console.log(file)
         try {
             const res = this.courseSerice.addCourse(dto, file)
             return res
