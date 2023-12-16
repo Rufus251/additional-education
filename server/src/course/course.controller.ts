@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { addCourse } from './dto/add-course.dto';
 import { changeCourseInfo } from './dto/change-course-info.dto';
@@ -13,6 +13,7 @@ import { addTestQuestion } from './dto/add-test-question.dto';
 import { addTestQuestionVariant } from './dto/add-test-question-variant.dto';
 import { addExam } from './dto/add-exam.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('course')
 @ApiTags('course')
@@ -43,9 +44,12 @@ export class CourseController {
     @Post('addCourse')
     @ApiResponse({ status: 200, description: 'Return course'})
     @UsePipes(new ValidationPipe())
-    async addCourse(@Body() dto: addCourse) {
+    @UseInterceptors(FileInterceptor('file'))
+    async addCourse(@Body() dto: addCourse, @UploadedFile() file: Express.Multer.File ) {
+        console.log(dto)
+        console.log(file)
         try {
-            const res = this.courseSerice.addCourse(dto)
+            const res = this.courseSerice.addCourse(dto, file)
             return res
         } catch (error) {
             return error

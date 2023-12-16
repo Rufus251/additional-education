@@ -12,10 +12,12 @@ import { addTest } from './dto/add-test.dto';
 import { addTestQuestion } from './dto/add-test-question.dto';
 import { addTestQuestionVariant } from './dto/add-test-question-variant.dto';
 import { addExam } from './dto/add-exam.dto';
+import { FilesService } from 'src/files/files.service';
 
 @Injectable()
 export class CourseService {
-    constructor(private readonly databaseService: DatabaseService) { }
+    constructor(private readonly databaseService: DatabaseService,
+        private readonly fileService: FilesService) { }
 
     // course CRUD
     async getCourse() {
@@ -62,26 +64,28 @@ export class CourseService {
         return res
     }
 
-    async addCourse(dto: addCourse) {
+    async addCourse(dto: addCourse, file: Express.Multer.File) {
         try {
+            console.log(+dto.authorId, dto.authorId)
+            const fileName = await this.fileService.createImageFile(file)
             const res = await this.databaseService.courses.create({
                 data: {
-                    author: { connect: { id: dto.authorId } },
+                    author: { connect: { id: +dto.authorId } },
                     courseName: dto.courseName,
-                    educationType: { connect: { id: dto.educationTypeId } },
-                    faculty: { connect: { id: dto.facultyId } },
-                    diplomType: { connect: { id: dto.diplomTypeId } },
-                    diplomImg: dto.diplomImg,
+                    educationType: { connect: { id: +dto.educationTypeId } },
+                    faculty: { connect: { id: +dto.facultyId } },
+                    diplomType: { connect: { id: +dto.diplomTypeId } },
+                    diplomImg: fileName,
                     courseToAdditional: {
                         create: {
                             courseAdditional: {
                                 connect: {
-                                    id: dto.coursesToAdditionalId
+                                    id: +dto.coursesToAdditionalId
                                 }
                             }
                         }
                     },
-                    minHours: dto.minHours,
+                    minHours: +dto.minHours,
                     courseInfo: { create: {} }
                 }
             })
