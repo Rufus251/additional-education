@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import { IsNumber, IsString } from "class-validator";
 
 export class addLection {
@@ -8,6 +9,7 @@ export class addLection {
 
     @IsNumber()
     @ApiProperty()
+    @Type(() => Number)
     queueNumber: number
 
     @IsString()
@@ -17,9 +19,4 @@ export class addLection {
     @IsString()
     @ApiProperty()
     homeworkDesription: string
-
-    @IsString()
-    @ApiProperty()
-    homeworkFile: string
-
 }

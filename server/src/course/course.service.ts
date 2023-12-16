@@ -285,11 +285,15 @@ export class CourseService {
         return res
     }
 
-    async addLection(moduleId: number, dto: addLection) {
+    async addLection(moduleId: number, dto: addLection, file: Express.Multer.File) {
         try {
+            const homeworkUrl = await this.fileService.createPDFFile(file)
+            console.log(+dto.queueNumber)
             const res = await this.databaseService.lectionLesson.create({
                 data: {
                     ...dto,
+                    queueNumber: +dto.queueNumber,
+                    homeworkFile: homeworkUrl,
                     module: {
                         connect: {
                             id: moduleId

@@ -368,6 +368,8 @@ model testLesson {
 
   testQuestions testQuestion[]
 
+  // to do:
+  // delete this, test dont have homework
   homeworkName       String
   homeworkDesription String
   homeworkFile       String
@@ -443,13 +445,13 @@ model Blogs {
 
   blogInfo BlogInfo?
 
-  faculty        Faculty   @relation(fields: [facultyId], references: [id])
-  facultyId      Int
+  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  facultyId Int
 
-  blogImg        String
-  blogTitle      String
-  createdAt      DateTime? @default(now())
-  views          Int?      @default(0)
+  blogImg   String
+  blogTitle String
+  createdAt DateTime? @default(now())
+  views     Int?      @default(0)
 }
 
 model BlogInfo {
@@ -459,7 +461,7 @@ model BlogInfo {
   blogsId Int   @unique
 
   blogBlocks BlogBlocks[]
-  likes      Int @default(0)
+  likes      Int          @default(0)
   comments   Comment[]
 }
 
@@ -480,7 +482,7 @@ model Comment {
   id Int @id @default(autoincrement())
 
   blogInfo   BlogInfo @relation(fields: [blogInfoId], references: [id], onDelete: Cascade)
-  blogInfoId Int      
+  blogInfoId Int
 
   user   User @relation(fields: [userId], references: [id])
   userId Int
@@ -510,10 +512,10 @@ model Tests {
 
   passedUsers TestsOnUser[]
 
-  testsInfo  TestsInfo?
+  testsInfo TestsInfo?
 
-  faculty    Faculty    @relation(fields: [facultyId], references: [id])
-  facultyId  Int
+  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  facultyId Int
 
   timeToPass Int
   askAmount  Int
@@ -538,7 +540,7 @@ model TestTasks {
   id Int @id @default(autoincrement())
 
   testInfo   TestsInfo @relation(fields: [testInfoId], references: [id], onDelete: Cascade)
-  testInfoId Int       
+  testInfoId Int
 
   taskTitle      String
   //checkbox / radiobtn
@@ -579,22 +581,22 @@ model Videolections {
 
   VideolectionInfo VideolectionInfo?
 
-  faculty     Faculty      @relation(fields: [facultyId], references: [id])
-  facultyId   Int
+  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  facultyId Int
 
   lectionImg  String
   lectionName String
-  createdAt   DateTime     @default(now())
-  views       Int          @default(0)
+  createdAt   DateTime @default(now())
+  views       Int      @default(0)
 }
 
 model VideolectionInfo {
   id Int @id @default(autoincrement())
 
   Videolection   Videolections @relation(fields: [VideolectionId], references: [id], onDelete: Cascade)
-  VideolectionId Int      @unique
+  VideolectionId Int           @unique
 
-  videoLectionURL      String?
+  videoLectionURL   String?
   diplomForPass     String?
   descriptionHeader String?
   description       String?
