@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class addExam {
     @IsString()
@@ -8,19 +9,18 @@ export class addExam {
     
     @IsNumber()
     @ApiProperty()
+    @Type(() => Number)
     queueNumber: number
     
     @IsString()
     @ApiProperty()
+    @IsOptional()
     header: string
     
     @IsString()
     @ApiProperty()
+    @IsOptional()
     text: string
-    
-    @IsString()
-    @ApiProperty()
-    img: string
     
     @IsString()
     @ApiProperty()
@@ -29,8 +29,4 @@ export class addExam {
     @IsString()
     @ApiProperty()
     homeworkDesription: string
-    
-    @IsString()
-    @ApiProperty()
-    homeworkFile: string
 }

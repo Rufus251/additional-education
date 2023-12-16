@@ -25,15 +25,15 @@ export class CourseService {
         return res
     }
 
-    async getCourseForAdditional(additionalName: string){
+    async getCourseForAdditional(additionalName: string) {
         try {
             const courseAdditional = await this.databaseService.courseAdditional.findFirst({
-                where:{
+                where: {
                     name: additionalName
                 }
             })
             let courseToAdditional = await this.databaseService.coursesToAdditional.findMany({
-                where:{
+                where: {
                     courseAdditionalId: courseAdditional.id
                 }
             })
@@ -41,9 +41,9 @@ export class CourseService {
             courseToAdditional = courseToAdditional.filter((elem, ind) => courseToAdditional.indexOf(elem) === ind)
 
             let coursesForAdditional = []
-            for await (const elem of courseToAdditional){
+            for await (const elem of courseToAdditional) {
                 const course = await this.databaseService.courses.findFirst({
-                    where:{
+                    where: {
                         id: elem.coursesId
                     }
                 })
@@ -476,11 +476,22 @@ export class CourseService {
         return res
     }
 
-    async addExam(moduleId: number, dto: addExam) {
+    // first file homewordk, then image
+    // to do:
+    // check file types, if img and !homework, img go to homeworkFile
+    async addExam(moduleId: number, dto: addExam, files: Array<Express.Multer.File>) {
         try {
+            let imgUrl = ""
+            if (files[1]){
+                imgUrl = await this.fileService.createImageFile(files[1])
+            }
+            const homeworkUrl = await this.fileService.createPDFFile(files[0])
             const res = await this.databaseService.examLesson.create({
                 data: {
                     ...dto,
+                    queueNumber: +dto.queueNumber,
+                    img: imgUrl,
+                    homeworkFile: homeworkUrl,
                     module: {
                         connect: {
                             id: moduleId

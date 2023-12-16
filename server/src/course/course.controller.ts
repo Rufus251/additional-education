@@ -287,11 +287,13 @@ export class CourseController {
         return res
     }
 
+    // first file homewordk, then image
     @Post('addExam/:moduleId')
     @ApiResponse({ status: 200, description: 'Return exam' })
     @UsePipes(new ValidationPipe())
-    async addExam(@Param('moduleId') moduleId: number, @Body() dto: addExam) {
-        const res = this.courseSerice.addExam(+moduleId, dto)
+    @UseInterceptors(AnyFilesInterceptor())
+    async addExam(@Param('moduleId') moduleId: number, @Body() dto: addExam, @UploadedFiles() files: Array<Express.Multer.File>) {
+        const res = this.courseSerice.addExam(+moduleId, dto, files)
         return res
     }
 
