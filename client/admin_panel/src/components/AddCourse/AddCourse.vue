@@ -12,26 +12,16 @@
         :diplomType="diplomType"
         :courseAdditional="courseAdditional"
         v-model:MainValidProp="MainValid"
-        v-model:CourseNameProp="CourseName"
-        v-model:FacultyNameProp="FacultyName"
-        v-model:EduTypesNameProp="EduTypesName"
-        v-model:DiplomTypesNameProp="DiplomTypesName"
-        v-model:CourseAdditionalNamesProp="CourseAdditionalNames"
-        v-model:FileProp="File"
-        v-model:MinHoursProp="MinHoursNames"
+        v-model:CourseProp="Course"
       ></AddCourseMain>
+      {{ Course }}
 
       <!-- Change Course Info Start -->
       <AddCourseInfo
         v-model:InfoValidProp="InfoValid"
-        v-model:AuthorNameProp="AuthorName"
-        v-model:MinMaxHoursProp="MinMaxHours"
-        v-model:CourseGoalProp="CourseGoal"
-        v-model:EducationFormProp="EducationForm"
-        v-model:CertificationTypeProp="CertificationType"
-        v-model:AuthorInfoProp="AuthorInfo"
+        v-model:InfoProp="Info"
       ></AddCourseInfo>
-
+      {{ Info }}
       <!-- Add Course Section -->
       <AddCourseSection
         v-model:SectionValidProp="SectionValid"
@@ -39,7 +29,9 @@
       ></AddCourseSection>
       {{ Sections }}
 
-      <blue-button-full :isDisabled="(MainValid && InfoValid && SectionValid) === false">
+      <blue-button-full
+        :isDisabled="(MainValid && InfoValid && SectionValid) === false"
+      >
         Создать курс
       </blue-button-full>
     </v-form>
@@ -67,27 +59,32 @@ export default {
     return {
       // Create Course
       MainValid: false,
-      CourseName: "",
-      FacultyName: "",
-      EduTypesName: "",
-      DiplomTypesName: "",
-      CourseAdditionalNames: [],
-      File: false,
-      MinHoursNames: 0,
+      Course: {
+        CourseName: "",
+        FacultyName: "",
+        EduTypesName: "",
+        DiplomTypesName: "",
+        CourseAdditionalNames: [],
+        File: false,
+        MinHoursNames: 0,
+      },
 
       // Change Course Info
       InfoValid: false,
-      AuthorName: "",
-      MinMaxHours: "",
-      CourseGoal: "",
-      EducationForm: "",
-      CertificationType: "",
-      AuthorInfo: ["", "", "", ""],
+      Info:{
+        AuthorName: "",
+        MinMaxHours: "",
+        CourseGoal: "",
+        EducationForm: "",
+        CertificationType: "",
+        AuthorInfo: ["", "", "", ""],
+      },
 
       // Add Section
       SectionValid: false,
       Sections: [],
-      
+      // to do:
+      // module validation
     };
   },
 };
@@ -101,7 +98,7 @@ export default {
 h2 {
   margin-top: 30px;
 }
-.v-btn{
+.v-btn {
   margin-top: 20px;
 }
 </style>
