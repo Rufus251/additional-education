@@ -29,8 +29,10 @@
       ></AddCourseSection>
       {{ Sections }}
 
+      <!-- && InfoValid && SectionValid -->
       <blue-button-full
-        :isDisabled="(MainValid && InfoValid && SectionValid) === false"
+        :isDisabled="(MainValid ) === false"
+        @click="AddCourse(Course, Info, Sections)"
       >
         Создать курс
       </blue-button-full>
@@ -42,6 +44,8 @@
 import AddCourseMain from "./AddCourse__Main.vue";
 import AddCourseInfo from "./AddCourse__Info.vue";
 import AddCourseSection from "./AddCourse__Section.vue";
+
+import axios from "axios";
 export default {
   components: {
     AddCourseMain,
@@ -64,14 +68,14 @@ export default {
         FacultyName: "",
         EduTypesName: "",
         DiplomTypesName: "",
-        CourseAdditionalNames: [],
+        CourseAdditionalName: "",
         File: false,
-        MinHoursNames: 0,
+        MinHours: 0,
       },
 
       // Change Course Info
       InfoValid: false,
-      Info:{
+      Info: {
         AuthorName: "",
         MinMaxHours: "",
         CourseGoal: "",
@@ -86,6 +90,61 @@ export default {
       // to do:
       // module validation
     };
+  },
+  methods: {
+    async AddCourse(Main, Info, Sections) {
+      const main_res = await this.AddMain(Main);
+      console.log(main_res);
+      // const info_res = await this.AddInfo(Info)
+      // console.log(info_res)
+      // const section_res = await this.AddSection(Sections)
+      // console.log(section_res)
+      Info = Sections;
+      Sections = Info;
+    },
+
+    async AddMain(Main) {
+      console.log(Main);
+      let formdata = new FormData();
+
+      const educationTypeId = this.eduTypes.find(
+        (edu) => edu.name === Main.EduTypesName
+      ).id;
+      const facultyId = this.faculties.find(
+        (fac) => fac.name === Main.FacultyName
+      ).id;
+      const DiplomTypesName = this.diplomType.find(
+        (dip) => dip.name === Main.DiplomTypesName
+      ).id;
+      const coursesToAdditionalId = this.courseAdditional.find(
+        (adi) => adi.name === Main.CourseAdditionalName
+      ).id;
+
+      formdata.append("authorId", "1");
+      formdata.append("courseName", Main.CourseName);
+      formdata.append("educationTypeId", educationTypeId);
+      formdata.append("facultyId", facultyId);
+      formdata.append("diplomTypeId", DiplomTypesName);
+      formdata.append("coursesToAdditionalId", coursesToAdditionalId);
+      formdata.append("minHours", +Main.MinHours);
+      formdata.append("file", Main.File[0]);
+
+      console.log(formdata);
+      
+      const URL = 'http://localhost:3000/course/addCourse'
+      const res = await axios.post(URL, formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res
+    },
+    async AddInfo(Info) {
+      console.log(Info);
+    },
+    async AddSection(Section) {
+      console.log(Section);
+    },
   },
 };
 </script>

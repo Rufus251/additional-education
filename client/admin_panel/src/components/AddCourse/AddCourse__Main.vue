@@ -31,12 +31,11 @@
         variant="underlined"
       ></v-autocomplete>
       <v-autocomplete
-        v-model="Course.CourseAdditionalNames"
+        v-model="Course.CourseAdditionalName"
         :rules="CourseAdditionalNamesRules"
         label="Выберите дополнительное"
         :items="courseAdditional.map((elem) => elem.name)"
         variant="underlined"
-        multiple
       ></v-autocomplete>
       <v-file-input v-model="Course.File" variant="underlined"></v-file-input>
       <v-text-field
@@ -71,7 +70,7 @@ export default {
         FacultyName: "",
         EduTypesName: "",
         DiplomTypesName: "",
-        CourseAdditionalNames: [],
+        CourseAdditionalName: "",
         File: false,
         MinHours: "250",
       },
