@@ -87,68 +87,7 @@ export default {
       // Add Section
       SectionValid: false,
       Sections: [],
-      Section: {
-        hoursAmount: 0,
-        cost: 0,
-        cashback: 0,
-
-        modules: [],
-        module: {
-          hoursAmount: 0,
-          moduleName: "string",
-
-          tasks: [],
-          videolection: {
-            lectionImg: "string",
-            lectionName: "string",
-          },
-          lection: {
-            lessonName: "string",
-            queueNumber: 0,
-            homeworkName: "string",
-            homeworkDesription: "string",
-            homeworkFile: "string",
-
-            lectionBlocks: [],
-            lectionBlock: {
-              header: "string",
-              text: "string",
-              img: "string",
-            },
-          },
-          test: {
-            timeToPass: 0,
-            askAmount: 0,
-            authorName: "string",
-
-            testQuestions: [],
-            testQuestion: {
-              questionType: "string",
-              queueNumber: 0,
-              questionHeader: "string",
-              questionImg: "string",
-
-              testQuestionVariants: [],
-              testQuestionVariant: {
-                queueNumber: 0,
-                variantText: "string",
-                isTrue: true,
-              },
-            },
-          },
-          exam: {
-            lessonName: "string",
-            queueNumber: 0,
-            header: "string",
-            text: "string",
-            img: "string",
-            homeworkName: "string",
-            homeworkDesription: "string",
-            homeworkFile: "string",
-          },
-        },
-      },
-      SectionsCount: 0,
+      
     };
   },
 };

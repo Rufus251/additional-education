@@ -6,7 +6,7 @@
         <h3>Секция {{ SCount }}</h3>
         <v-text-field
           v-model="Sections[SCount - 1].hoursAmount"
-          :rules="MinMaxHoursRules"
+          :rules="HoursAmountRules"
           label="Количество часов на секцию"
           placeholder="250"
           variant="underlined"
@@ -14,7 +14,7 @@
         </v-text-field>
         <v-text-field
           v-model="Sections[SCount - 1].cost"
-          :rules="MinMaxHoursRules"
+          :rules="CostRules"
           label="Цена"
           placeholder="6000 рублей"
           variant="underlined"
@@ -22,7 +22,7 @@
         </v-text-field>
         <v-text-field
           v-model="Sections[SCount - 1].cashback"
-          :rules="MinMaxHoursRules"
+          :rules="CashbackRules"
           label="Кешбек"
           placeholder="300"
           variant="underlined"
@@ -30,7 +30,7 @@
         </v-text-field>
 
         <AddCourseSectionModule
-        v-model:ModulesProp="Sections[SCount-1].modules"
+          v-model:ModulesProp="Sections[SCount - 1].modules"
         >
         </AddCourseSectionModule>
       </section>
@@ -50,7 +50,7 @@
       + Секция
     </BlueButton180>
     <BlueButton180
-      v-if="SectionsCounter > 0"
+      v-if="SectionsCounter > 1"
       @click="
         SectionsCounter--;
         Sections.pop();
@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import AddCourseSectionModule from "./AddCourse__Section__Module.vue"
+import AddCourseSectionModule from "./AddCourse__Section__Module.vue";
 export default {
-  components:{
-    AddCourseSectionModule
+  components: {
+    AddCourseSectionModule,
   },
   props: {
     SectionValidProp: Boolean,
@@ -76,30 +76,35 @@ export default {
       valid: false,
 
       // Add Section
-      SectionsCounter: 0,
+      SectionsCounter: 1,
       MaxSectionsCounter: 4,
 
-      Sections: [],
-      SectionsCount: 0,
+      Sections: [
+        {
+          hoursAmount: 0,
+          cost: 0,
+          cashback: "",
+          modules: [],
+        },
+      ],
+      SectionsCount: 1,
+
+      // Rules
+      HoursAmountRules: [(v) => v !== "" || "Введите количество часов"],
+      CostRules: [(v) => v !== "" || "Введите цену"],
+      CashbackRules: [(v) => v !== "" || "Введите кешбек"],
     };
   },
   watch: {
     valid(value) {
       this.$emit("update:SectionValidProp", value || false);
     },
-    // SectionsValid:{
-    //     handler(){
-
-    //         this.$emit("update:SectionValidProp", this.Sections || []);
-    //     },
-    //     deep: true
-    // },
-    Sections:{
-        handler(){
-            this.$emit("update:SectionsProp", this.Sections || []);
-        },
-        deep: true
-    }
+    Sections: {
+      handler() {
+        this.$emit("update:SectionsProp", this.Sections || []);
+      },
+      deep: true,
+    },
   },
 };
 </script>

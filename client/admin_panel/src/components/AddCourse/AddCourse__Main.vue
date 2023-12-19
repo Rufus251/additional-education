@@ -72,7 +72,7 @@ export default {
       valid: false,
 
       // Create Course
-      CourseName: "",
+      CourseName: "Очень крутое название",
       CourseNameRules: [v => v !== "" || "Введите название"],
 
       FacultyName: "",
@@ -87,7 +87,7 @@ export default {
       File: false,
       FileRules: [v => v.length > 0 || "Выберите файл"],
 
-      MinHours: "",
+      MinHours: "250",
       MinHoursRules: [v => v.length > 0 || "Введите число"],
     };
   },
