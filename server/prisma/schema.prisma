@@ -367,12 +367,6 @@ model testLesson {
   pointForPass       Int
 
   testQuestions testQuestion[]
-
-  // to do:
-  // delete this, test dont have homework
-  homeworkName       String
-  homeworkDesription String
-  homeworkFile       String
 }
 
 model testQuestion {

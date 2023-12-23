@@ -34,16 +34,4 @@ export class addTest {
     @IsNumber()
     @ApiProperty()
     pointForPass: number
-    
-    @IsString()
-    @ApiProperty()
-    homeworkName: string
-    
-    @IsString()
-    @ApiProperty()
-    homeworkDesription: string
-    
-    @IsString()
-    @ApiProperty()
-    homeworkFile: string
 }
