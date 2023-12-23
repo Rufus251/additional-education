@@ -1,19 +1,47 @@
 <template>
   <section class="addCourse__Task">
     <v-form v-model="valid" ref="form">
-      <h4>Картинка лекции</h4>
-      <v-file-input
-        v-model="Task.lectionImg"
-        variant="underlined"
-      ></v-file-input>
-
       <v-text-field
-        v-model="Task.lectionName"
+        v-model="Task.videolectionName"
         label="Название видеолекции"
         placeholder="Урок 1. Вступление"
         variant="underlined"
       >
       </v-text-field>
+      <v-text-field
+        v-model="Task.descriptionHeader"
+        label="Заголовок описания лекции"
+        placeholder="Заголовок"
+        variant="underlined"
+      >
+      </v-text-field>
+      <v-text-field
+        v-model="Task.descriptionContent"
+        label="Текст описания"
+        placeholder="lorem ipsum"
+        variant="underlined"
+      >
+      </v-text-field>
+
+      <v-text-field
+        v-model="Task.homeworkName"
+        label="Загловок домашки"
+        placeholder="Дз номер 1. Тема 1"
+        variant="underlined"
+      >
+      </v-text-field>
+      <v-text-field
+        v-model="Task.homeworkDesription"
+        label="Загловок домашки"
+        placeholder="Дз номер 1. Тема 1"
+        variant="underlined"
+      >
+      </v-text-field>
+
+      <h4>Видеолекция (mp4)</h4>
+      <v-file-input v-model="Task.files[0]" variant="underlined"></v-file-input>
+      <h4>Дз (pdf)</h4>
+      <v-file-input v-model="Task.files[1]" variant="underlined"></v-file-input>
     </v-form>
   </section>
 </template>
@@ -29,8 +57,13 @@ export default {
       valid: false,
 
       Task: {
-        lectionImg: "",
-        lectionName: "",
+        videolectionName: "Урок 1. Вступление",
+        descriptionHeader: "Описание курса",
+        descriptionContent: "Lorem ipsum",
+        homeworkName: "Задание 1",
+        homeworkDesription: "Lorem ipsum",
+
+        files: ["", ""]
       },
     };
   },
