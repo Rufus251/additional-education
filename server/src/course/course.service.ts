@@ -496,11 +496,11 @@ export class CourseService {
     // check file types, if img and !homework, img go to homeworkFile
     async addExam(moduleId: number, dto: addExam, files: Array<Express.Multer.File>) {
         try {
-            let imgUrl = ""
-            if (files[1]){
-                imgUrl = await this.fileService.createImageFile(files[1])
-            }
-            const homeworkUrl = await this.fileService.createPDFFile(files[0])
+
+            // two files, img first, pdf second
+            const imgUrl = await this.fileService.createImageFile(files[0])
+            const homeworkUrl = await this.fileService.createPDFFile(files[1])
+
             const res = await this.databaseService.examLesson.create({
                 data: {
                     ...dto,
