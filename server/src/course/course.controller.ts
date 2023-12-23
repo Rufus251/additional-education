@@ -80,7 +80,7 @@ export class CourseController {
     @Post('addAuthorInfo/:courseInfoId')
     @ApiResponse({ status: 200, description: 'Return AuthorInfo' })
     @UsePipes(new ValidationPipe())
-    async addAuthorInfo(@Param('moduleId') courseInfoId: number, @Body() dto: addAuthorInfo) {
+    async addAuthorInfo(@Param('courseInfoId') courseInfoId: number, @Body() dto: addAuthorInfo) {
         const res = this.courseSerice.addAuthorInfo(+courseInfoId, dto)
         return res
     }
