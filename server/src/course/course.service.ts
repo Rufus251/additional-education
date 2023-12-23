@@ -168,16 +168,31 @@ export class CourseService {
 
     async addSection(courseInfoId: number, dto: addSection) {
         try {
+            const getInfo = await this.databaseService.courseInfo.findUnique({
+                where:{
+                    id: courseInfoId
+                }
+            })
+            const addModuleAmount = await this.databaseService.courseInfo.update({
+                where:{
+                    id: +courseInfoId
+                },
+                data: {
+                    moduleAmount: getInfo.moduleAmount + 1
+                }
+            })
+            
             const res = await this.databaseService.section.create({
                 data: {
                     ...dto,
                     courseInfo: {
                         connect: {
                             id: courseInfoId
-                        }
+                        },
                     }
                 }
             })
+            
             return res
         } catch (error) {
             return error
