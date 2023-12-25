@@ -75,19 +75,28 @@ export class CourseService {
                     faculty: { connect: { id: +dto.facultyId } },
                     diplomType: { connect: { id: +dto.diplomTypeId } },
                     diplomImg: fileName,
-                    courseToAdditional: {
-                        create: {
-                            courseAdditional: {
-                                connect: {
-                                    id: +dto.coursesToAdditionalId
-                                }
-                            }
-                        }
-                    },
                     minHours: +dto.minHours,
                     courseInfo: { create: {} }
                 }
             })
+            if (dto.coursesToAdditionalId) {
+                await this.databaseService.courses.update({
+                    where: {
+                        id: res.id
+                    },
+                    data: {
+                        courseToAdditional: {
+                            create: {
+                                courseAdditional: {
+                                    connect: {
+                                        id: +dto.coursesToAdditionalId
+                                    }
+                                }
+                            }
+                        },
+                    }
+                })
+            }
             return res
         } catch (error) {
             return error
@@ -169,19 +178,19 @@ export class CourseService {
     async addSection(courseInfoId: number, dto: addSection) {
         try {
             const getInfo = await this.databaseService.courseInfo.findUnique({
-                where:{
+                where: {
                     id: courseInfoId
                 }
             })
             const addModuleAmount = await this.databaseService.courseInfo.update({
-                where:{
+                where: {
                     id: +courseInfoId
                 },
                 data: {
                     moduleAmount: getInfo.moduleAmount + 1
                 }
             })
-            
+
             const res = await this.databaseService.section.create({
                 data: {
                     ...dto,
@@ -192,7 +201,7 @@ export class CourseService {
                     }
                 }
             })
-            
+
             return res
         } catch (error) {
             return error

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 import { Transform, Type } from 'class-transformer';
 export class addCourse {
 
@@ -28,7 +28,8 @@ export class addCourse {
     diplomTypeId: number;
 
     @IsNumber()
-    @ApiProperty()
+    @IsOptional()
+    @ApiProperty({required: false})
     @Type(() => Number)
     coursesToAdditionalId: number;
 
