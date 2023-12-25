@@ -70,7 +70,7 @@ export default {
         FacultyName: "",
         EduTypesName: "",
         DiplomTypesName: "",
-        CourseAdditionalName: "",
+        CourseAdditionalName: false,
         File: false,
         MinHours: "250",
       },

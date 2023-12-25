@@ -2,7 +2,7 @@
   <section class="addCourse__Task">
     <v-form v-model="valid" ref="form">
       <v-text-field
-        v-model="Task.lessonName"
+        v-model="Task.examName"
         label="Название экзамена"
         placeholder="Экз по математике"
         variant="underlined"
@@ -24,7 +24,7 @@
       </v-text-field>
       
       <h4>Картинка экзамена</h4>
-      <v-file-input v-model="Task.img" variant="underlined"></v-file-input>
+      <v-file-input v-model="Task.files[0]" variant="underlined"></v-file-input>
       
       <v-text-field
         v-model="Task.homeworkName"
@@ -42,7 +42,7 @@
       </v-text-field>
 
       <h4>Файл домашки</h4>
-      <v-file-input v-model="Task.homeworkFile" variant="underlined"></v-file-input>
+      <v-file-input v-model="Task.files[1]" variant="underlined"></v-file-input>
     </v-form>
   </section>
 </template>
@@ -58,14 +58,13 @@ export default {
       valid: false,
 
       Task: {
-        lessonName: "",
+        examName: "Экзамен 1",
         queueNumber: 0,
-        header: "",
-        text: "",
-        img: "",
-        homeworkName: "",
-        homeworkDesription: "",
-        homeworkFile: "",
+        header: "Заголовок",
+        text: "Текст",
+        homeworkName: "Название домашки",
+        homeworkDesription: "Описание домашки lorem",
+        files: ["", ""]
       },
     };
   },

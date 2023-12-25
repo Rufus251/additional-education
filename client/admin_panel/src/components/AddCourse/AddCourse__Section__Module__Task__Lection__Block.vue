@@ -26,8 +26,8 @@
       <BlueButton180
         @click="
           LectionBlocks.push({
-            header: '',
-            text: '',
+            header: 'Заголовок',
+            text: 'LoremIpsum',
             img: '',
           })
         "

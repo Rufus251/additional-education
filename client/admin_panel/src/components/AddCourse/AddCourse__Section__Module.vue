@@ -30,8 +30,8 @@
       @click="
         ModuleCounter++;
         Modules.push({
-          hoursAmount: 0,
-          moduleName: '',
+          hoursAmount: 120,
+          moduleName: 'Крутое название модуля',
           tasks: [],
         });
       "

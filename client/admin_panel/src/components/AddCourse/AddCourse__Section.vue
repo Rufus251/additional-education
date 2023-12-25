@@ -40,9 +40,9 @@
       @click="
         SectionsCounter++;
         Sections.push({
-          hoursAmount: 0,
-          cost: 0,
-          cashback: 0,
+          hoursAmount: 120,
+          cost: 6000,
+          cashback: 300,
           modules: [],
         });
       "
@@ -81,9 +81,9 @@ export default {
 
       Sections: [
         {
-          hoursAmount: 0,
-          cost: 0,
-          cashback: "",
+          hoursAmount: 120,
+          cost: 6000,
+          cashback: 300,
           modules: [],
         },
       ],

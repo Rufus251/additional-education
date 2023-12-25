@@ -55,10 +55,10 @@ export default {
       valid: false,
 
       Task: {
-        lessonName: "",
+        lessonName: "Урок Х. О чём то",
         queueNumber: 0,
-        homeworkName: "",
-        homeworkDesription: "",
+        homeworkName: "Дз 1. О чём то",
+        homeworkDesription: "lorem ipsum",
         homeworkFile: {},
 
         lectionBlocks: [],

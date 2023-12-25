@@ -31,9 +31,9 @@
       <BlueButton180
         @click="
           TestQuestions.push({
-            questionType: '',
+            questionType: 'checkbox',
             queueNumber: 0,
-            questionHeader: '',
+            questionHeader: 'Загловок вопроса',
             questionImg: '',
 
             testQuestionVariants: [],

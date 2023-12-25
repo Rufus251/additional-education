@@ -21,7 +21,7 @@
         @click="
           QuestionVariants.push({
             queueNumber: 0,
-            variantText: '',
+            variantText: 'Ответ номер х',
             isTrue: false,
           })
         "

@@ -2,22 +2,60 @@
   <section class="addCourse__Task">
     <v-form v-model="valid" ref="form">
       <v-text-field
-        v-model="Task.timeToPass"
-        label="Время на прохождение"
+        v-model="Task.testName"
+        label="Название теста"
         placeholder="60"
         variant="underlined"
       >
       </v-text-field>
       <v-text-field
-        v-model="Task.askAmount"
-        label="Количество вопросов"
-        placeholder="20"
+        v-model="Task.descriptionHeader"
+        label="Заголовок описания"
+        placeholder="Заголовок важного теста"
         variant="underlined"
       >
       </v-text-field>
       <v-text-field
+        v-model="Task.descriptionContent"
+        label="Текст описания"
+        placeholder="Описание важного теста"
+        variant="underlined"
+      >
+      </v-text-field>
+
+      <v-text-field
+        v-model="Task.timeForPass"
+        label="Время прохождения в минутах"
+        placeholder="60"
+        variant="underlined"
+      >
+      </v-text-field>
+      <v-text-field
+        v-model="Task.questionsAmount"
+        label="Количество вопросов в штуках"
+        placeholder="20"
+        variant="underlined"
+      >
+      </v-text-field>
+
+      <v-text-field
+        v-model="Task.maxPoints"
+        label="Максимальное количество очков"
+        placeholder="60"
+        variant="underlined"
+      >
+      </v-text-field>
+      <v-text-field
+        v-model="Task.pointForPass"
+        label="Количество очков для прохождения"
+        placeholder="20"
+        variant="underlined"
+      >
+      </v-text-field>
+
+      <v-text-field
         v-model="Task.authorName"
-        label="Имя автора"
+        label="Имя автора теста"
         placeholder="Иванов Иван"
         variant="underlined"
       >
@@ -46,9 +84,14 @@ export default {
       valid: false,
 
       Task: {
-        timeToPass: '',
-        askAmount: '',
-        authorName: '',
+        testName: 'Оченб Важный ТЕЕЕСТ',
+        descriptionHeader: "Загловок описания",
+        descriptionContent: "Описание описания",
+        timeForPass: "60",
+        questionsAmount: '20',
+        maxPoints: "60",
+        pointForPass: '30',
+        authorName: "Иванов Иван",
 
         testQuestions: [],
       },

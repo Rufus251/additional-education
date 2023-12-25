@@ -79,7 +79,7 @@ export default {
         "Проектирует образовательные программы", 
         "Сооснователь проектов Место и образовательного бюро Розетка", 
         "Помогает ученикам найти собственный путь развития"],
-        MinMaxHours: "",
+        MinMaxHours: "240-1000",
         CourseGoal: "lorem ipsum lorem ipsum",
         EducationForm: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed dо.",
         CertificationType: "Итоговое тестирование из 20 вопросов с вариантами ответов.",

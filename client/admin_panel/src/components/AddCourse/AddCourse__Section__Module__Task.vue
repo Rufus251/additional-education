@@ -50,9 +50,15 @@
       @click="
         TaskType.push('Test');
         Tasks.push({
-          timeToPass: 0,
-          askAmount: 0,
-          authorName: '',
+          testName: 'Оченб Важный ТЕЕЕСТ',
+          descriptionHeader: 'Загловок описания',
+          descriptionContent: 'Описание описания',
+          timeForPass: '60',
+          questionsAmount: '20',
+          maxPoints: '60',
+          pointForPass: '30',
+          authorName: 'Иванов Иван',
+
           testQuestions: [],
         });
       "
