@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import QuestionVariants from "./AddCourse__Section__Module__Task__Test__Question__Variant.vue"
+import QuestionVariants from "./Task__Test__Question__Variant.vue"
 export default {
     components:{
         QuestionVariants

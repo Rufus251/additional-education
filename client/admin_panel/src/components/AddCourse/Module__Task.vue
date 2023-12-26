@@ -96,10 +96,10 @@
 </template>
 
 <script>
-import Videolection from "./AddCourse__Section__Module__Task__Videolection.vue";
-import Lection from "./AddCourse__Section__Module__Task__Lection.vue";
-import Exam from "./AddCourse__Section__Module__Task__Exam.vue";
-import Test from "./AddCourse__Section__Module__Task__Test.vue";
+import Videolection from "./Task__Videolection.vue";
+import Lection from "./Task__Lection.vue";
+import Exam from "./Task__Exam.vue";
+import Test from "./Task__Test.vue";
 export default {
   components: {
     Videolection,

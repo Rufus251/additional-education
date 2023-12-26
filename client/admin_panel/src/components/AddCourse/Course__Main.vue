@@ -45,7 +45,6 @@
         variant="underlined"
       >
       </v-text-field>
-      {{ Course }}
     </v-form>
   </section>
 </template>

@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import LectionBlock from "./AddCourse__Section__Module__Task__Lection__Block.vue";
+import LectionBlock from "./Task__Lection__Block.vue";
 export default {
   components: {
     LectionBlock,

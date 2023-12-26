@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import AddCourseSectionModule from "./AddCourse__Section__Module.vue";
+import AddCourseSectionModule from "./Section__Module.vue";
 export default {
   components: {
     AddCourseSectionModule,

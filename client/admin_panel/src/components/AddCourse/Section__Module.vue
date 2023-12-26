@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import AddCourseSectionModuleTask from "./AddCourse__Section__Module__Task.vue";
+import AddCourseSectionModuleTask from "./Module__Task.vue";
 export default {
   components: {
     AddCourseSectionModuleTask,

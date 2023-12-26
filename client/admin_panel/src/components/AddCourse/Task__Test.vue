@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import TestQuestion from "./AddCourse__Section__Module__Task__Test__Question.vue";
+import TestQuestion from "./Task__Test__Question.vue";
 export default {
   components: {
     TestQuestion,

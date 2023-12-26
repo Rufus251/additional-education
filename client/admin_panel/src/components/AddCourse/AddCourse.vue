@@ -25,7 +25,6 @@
         v-model:SectionValidProp="SectionValid"
         v-model:SectionsProp="Sections"
       ></AddCourseSection>
-      {{ Sections }}
 
       <!-- && InfoValid && SectionValid -->
       <blue-button-full
@@ -39,9 +38,9 @@
 </template>
 
 <script>
-import AddCourseMain from "./AddCourse__Main.vue";
-import AddCourseInfo from "./AddCourse__Info.vue";
-import AddCourseSection from "./AddCourse__Section.vue";
+import AddCourseMain from "./Course__Main.vue";
+import AddCourseInfo from "./Course__Info.vue";
+import AddCourseSection from "./Course__Section.vue";
 
 import axios from "axios";
 export default {
