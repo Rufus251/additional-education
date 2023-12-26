@@ -27,6 +27,19 @@ export class SortService {
         }
     }
 
+    async deleteEduType(id: number) {
+        try {
+            const res = await this.databaseService.educationType.delete({
+                where: {
+                    id
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
+    }
+
     async getFaculty() {
         const res = await this.databaseService.faculty.findMany()
         return res
@@ -37,6 +50,19 @@ export class SortService {
             const res = await this.databaseService.faculty.create({
                 data: {
                     ...dto
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
+    }
+
+    async deleteFaculty(id: number) {
+        try {
+            const res = await this.databaseService.faculty.delete({
+                where: {
+                    id
                 }
             })
             return res
@@ -63,6 +89,19 @@ export class SortService {
         }
     }
 
+    async deleteDiplomType(id: number) {
+        try {
+            const res = await this.databaseService.diplomType.delete({
+                where: {
+                    id
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
+    }
+
     async getCourseAdditional() {
         const res = await this.databaseService.courseAdditional.findMany()
         return res
@@ -73,6 +112,19 @@ export class SortService {
             const res = await this.databaseService.courseAdditional.create({
                 data: {
                     ...dto
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
+    }
+
+    async deleteCourseAdditional(id: number) {
+        try {
+            const res = await this.databaseService.courseAdditional.delete({
+                where: {
+                    id
                 }
             })
             return res

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { SortService } from './sort.service';
 import { addEduTypes } from './dto/add-edu-types.dto';
 import { addFaculty } from './dto/add-faculty.dto';
@@ -30,6 +30,13 @@ export class SortController {
         }
     }
 
+    @Delete('deleteEduType/:id')
+    @ApiResponse({ status: 200, description: 'Return EduType' })
+    async deleteEduType(@Param('id') id: number) {
+        const res = this.sortService.deleteEduType(+id)
+        return res
+    }
+
     @Get('faculty')
     @ApiResponse({ status: 200, description: 'Return facultys'})
     async getFaculty(){
@@ -47,6 +54,13 @@ export class SortController {
         } catch (error) {
             return error
         }
+    }
+
+    @Delete('deleteFaculty/:id')
+    @ApiResponse({ status: 200, description: 'Return Faculty' })
+    async deleteFaculty(@Param('id') id: number) {
+        const res = this.sortService.deleteFaculty(+id)
+        return res
     }
 
     @Get('diplomType')
@@ -68,6 +82,13 @@ export class SortController {
         }
     }
 
+    @Delete('deleteDiplomType/:id')
+    @ApiResponse({ status: 200, description: 'Return DiplomType' })
+    async deleteDiplomType(@Param('id') id: number) {
+        const res = this.sortService.deleteDiplomType(+id)
+        return res
+    }
+
     @Get('courseAdditional')
     @ApiResponse({ status: 200, description: 'Return courseAdditionals'})
     async getCourseAdditional(){
@@ -85,6 +106,13 @@ export class SortController {
         } catch (error) {
             return error
         }
+    }
+
+    @Delete('deleteCourseAdditional/:id')
+    @ApiResponse({ status: 200, description: 'Return CourseAdditional' })
+    async deleteCourseAdditional(@Param('id') id: number) {
+        const res = this.sortService.deleteCourseAdditional(+id)
+        return res
     }
 
     @Get('courseToAdditional')
