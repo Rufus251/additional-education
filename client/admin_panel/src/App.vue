@@ -22,7 +22,11 @@
       v-model="select"
       :faculties="faculties"
     ></AddTest>
-    <AddVideolection v-if="select == 3" v-model="select"></AddVideolection>
+    <AddVideolection
+      v-if="select == 3"
+      v-model="select"
+      :faculties="faculties"
+    ></AddVideolection>
   </section>
 </template>
 
