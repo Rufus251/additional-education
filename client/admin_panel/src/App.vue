@@ -8,7 +8,8 @@
     </div>
     <AddCourse
       v-if="
-      select == 1 && faculties && eduTypes && diplomType && courseAdditional"
+        select == 1 && faculties && eduTypes && diplomType && courseAdditional
+      "
       v-model="select"
       :faculties="faculties"
       :eduTypes="eduTypes"
@@ -16,7 +17,11 @@
       :courseAdditional="courseAdditional"
     >
     </AddCourse>
-    <AddTest v-if="select == 2" v-model="select"></AddTest>
+    <AddTest
+      v-if="select == 2"
+      v-model="select"
+      :faculties="faculties"
+    ></AddTest>
     <AddVideolection v-if="select == 3" v-model="select"></AddVideolection>
   </section>
 </template>
@@ -25,8 +30,8 @@
 import NavBar from "./components/common/NavBar.vue";
 
 import AddCourse from "./components/AddCourse/AddCourse.vue";
-import AddTest from "./components/AddTest.vue";
-import AddVideolection from "./components/AddVideolection.vue";
+import AddTest from "./components/AddTest/AddTest.vue";
+import AddVideolection from "./components/AddVideolection/AddVideolection.vue";
 
 import axios from "axios";
 
