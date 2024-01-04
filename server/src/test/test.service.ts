@@ -4,10 +4,13 @@ import { addTest } from './dto/add-test.dto';
 import { changeTestInfo } from './dto/change-test-info.dto';
 import { addTestTask } from './dto/add-test-task.dto';
 import { addTestTaskAnswerVariant } from './dto/add-test-task-answer-variant.dto';
+import { FilesService } from 'src/files/files.service';
+
 
 @Injectable()
 export class TestService {
-    constructor(private readonly databaseService: DatabaseService) { }
+    constructor(private readonly databaseService: DatabaseService, 
+        private readonly fileService: FilesService) { }
 
     async getTests() {
         const res = await this.databaseService.tests.findMany()
@@ -98,11 +101,14 @@ export class TestService {
         }
     }
 
-    async addTestTask(testInfoId: number, dto: addTestTask) {
+    async addTestTask(testInfoId: number, dto: addTestTask, file: Express.Multer.File) {
         try {
+            const fileName = await this.fileService.createImageFile(file)
             const res = await this.databaseService.testTasks.create({
                 data: {
-                    ...dto,
+                    taskTitle: dto.taskTitle,
+                    taskType: dto.taskType,
+                    taskImageUrl: fileName,
                     testInfo: {
                         connect: {
                             id: testInfoId

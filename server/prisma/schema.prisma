@@ -511,6 +511,7 @@ model Tests {
   faculty   Faculty @relation(fields: [facultyId], references: [id])
   facultyId Int
 
+  testName   String @default("")
   timeToPass Int
   askAmount  Int
   authorName String
@@ -522,11 +523,9 @@ model TestsInfo {
   test   Tests @relation(fields: [testId], references: [id], onDelete: Cascade)
   testId Int   @unique
 
-  testName        String?
   testHeader      String?
   testDescription String?
   pointsToPass    Int?
-  timeToPass      Int?
   tasks           TestTasks[]
 }
 
@@ -537,6 +536,7 @@ model TestTasks {
   testInfoId Int
 
   taskTitle      String
+  taskImageUrl   String?                  @default("")
   //checkbox / radiobtn
   taskType       String
   answerVariants TestTasksAnswerVariant[]

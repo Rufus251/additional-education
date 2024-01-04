@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TestService } from './test.service';
 import { addTest } from './dto/add-test.dto';
 import { changeTestInfo } from './dto/change-test-info.dto';
 import { addTestTask } from './dto/add-test-task.dto';
 import { addTestTaskAnswerVariant } from './dto/add-test-task-answer-variant.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('test')
 @ApiTags('test')
@@ -66,8 +67,9 @@ export class TestController {
     @Post('addTestTask/:testInfoId')
     @ApiResponse({ status: 200, description: 'Return testTask'})
     @UsePipes(new ValidationPipe())
-    async addTestTask(@Param('testInfoId') testInfoId: number, @Body() dto: addTestTask) {
-        const res = this.testService.addTestTask(+testInfoId, dto)
+    @UseInterceptors(FileInterceptor('file'))
+    async addTestTask(@Param('testInfoId') testInfoId: number, @Body() dto: addTestTask, @UploadedFile() file: Express.Multer.File) {
+        const res = this.testService.addTestTask(+testInfoId, dto, file)
         return res
     }
 

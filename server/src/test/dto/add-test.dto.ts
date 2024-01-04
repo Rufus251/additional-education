@@ -13,4 +13,8 @@ export class addTest {
     @IsString()
     @ApiProperty()
     authorName: string
+
+    @IsString()
+    @ApiProperty()
+    testName: string
 }
