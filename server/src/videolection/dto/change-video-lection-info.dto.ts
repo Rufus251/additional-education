@@ -5,16 +5,6 @@ export class changeVideolectionInfo {
     @IsString()
     @IsOptional()
     @ApiProperty({required: false})
-    videoLectionURL: string
-    
-    @IsString()
-    @IsOptional()
-    @ApiProperty({required: false})
-    diplomForPass: string
-    
-    @IsString()
-    @IsOptional()
-    @ApiProperty({required: false})
     descriptionHeader: string
     
     @IsString()

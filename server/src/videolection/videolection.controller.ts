@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UploadedFiles, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { VideolectionService } from './videolection.service';
 import { addVideoLection } from './dto/add-video-lection.dto';
 import { changeVideolectionInfo } from './dto/change-video-lection-info.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('videolection')
 @ApiTags('videolection')
@@ -19,8 +20,9 @@ export class VideolectionController {
     @Post('addVideolection/:userId/:facultyId')
     @ApiResponse({ status: 200, description: 'Return videolection'})
     @UsePipes(new ValidationPipe())
-    async addVideolection(@Param('userId') userId: number, @Param('facultyId') facultyId: number, @Body() dto: addVideoLection) {
-        const res = this.videoLectionService.addVideolection(+userId, +facultyId, dto)
+    @UseInterceptors(FileInterceptor('file'))
+    async addVideolection(@Param('userId') userId: number, @Param('facultyId') facultyId: number, @Body() dto: addVideoLection, @UploadedFile() file: Express.Multer.File) {
+        const res = this.videoLectionService.addVideolection(+userId, +facultyId, dto, file)
         return res
     }
 
@@ -40,8 +42,9 @@ export class VideolectionController {
 
     @Put('changeVideolectionInfo/:id')
     @ApiResponse({ status: 200, description: 'Return videolectionInfo'})
-    async changeVideolectionInfo(@Param('id') id: number, @Body() dto: changeVideolectionInfo){
-        const res = this.videoLectionService.changeVideolectionInfo(+id, dto)
+    @UseInterceptors(AnyFilesInterceptor())
+    async changeVideolectionInfo(@Param('id') id: number, @Body() dto: changeVideolectionInfo, @UploadedFiles() files: Array<Express.Multer.File>){
+        const res = this.videoLectionService.changeVideolectionInfo(+id, dto, files)
         return res
     }
 }
