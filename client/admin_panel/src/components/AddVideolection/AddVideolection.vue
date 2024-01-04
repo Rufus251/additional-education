@@ -93,7 +93,7 @@ export default {
       
       await this.AddVideolectionInfo(videolectionRes.data.id, Videolection);
 
-      this.progressMessage = "Тест добавлен!";
+      this.progressMessage = "Тест добавлен!"; 
     },
 
     async AddVideolectionMain(userId, Videolection) {
