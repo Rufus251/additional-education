@@ -27,6 +27,7 @@
       ></AddCourseSection>
 
       <!-- && InfoValid && SectionValid -->
+      {{ progressMessage }}
       <blue-button-full
         :isDisabled="MainValid === false"
         @click="AddCourse(Course, Info, Sections)"
@@ -84,12 +85,14 @@ export default {
       // Add Section
       SectionValid: false,
       Sections: [],
-      // to do:
-      // module validation
+  
+      progressMessage: ""
     };
   },
   methods: {
     async AddCourse(Main, Info, Sections) {
+      this.progressMessage = "Курс добавляется, ожидайте..."
+
       const main_res = await this.AddMain(Main);
 
       const info_res = await this.AddInfo(main_res.data.id, Info);
@@ -128,6 +131,8 @@ export default {
           }
         }
       }
+
+      this.progressMessage = "Курс добавлен!"
     },
 
     async AddMain(Main) {
