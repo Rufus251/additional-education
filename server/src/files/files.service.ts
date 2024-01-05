@@ -33,7 +33,15 @@ export class FilesService {
             return error
         }
     }
-
+    
+    async createMP3File(file: Express.Multer.File) {
+        try {
+            return this.createFile(file, ".mp3")
+        } catch (error) {
+            return error
+        }
+    }
+    
     async createPDFFile(file: Express.Multer.File) {
         try {
             return this.createFile(file, ".pdf")

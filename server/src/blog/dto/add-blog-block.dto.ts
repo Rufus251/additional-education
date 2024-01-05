@@ -12,19 +12,4 @@ export class addBlogBlock {
     @IsOptional()
     @ApiProperty({required: false})
     text: string
-    
-    @IsString()
-    @IsOptional()
-    @ApiProperty({required: false})
-    videoUrl: string
-    
-    @IsString()
-    @IsOptional()
-    @ApiProperty({required: false})
-    audioUrl: string
-    
-    @IsString()
-    @IsOptional()
-    @ApiProperty({required: false})
-    imgUrl: string
 }
