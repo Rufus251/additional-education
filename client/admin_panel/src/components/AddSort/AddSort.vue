@@ -4,14 +4,38 @@
       Назад
     </BlueButton180>
     <v-form v-model="valid" ref="form">
-      
+      <v-text-field
+        v-model="name"
+        label="Название факультета и тп"
+        placeholder="Педагогика"
+        variant="underlined"
+      >
+      </v-text-field>
 
       {{ progressMessage }}
       <blue-button-full
         :isDisabled="MainValid === false"
-        @click="AddTest(Test)"
+        @click="AddEduTypes(name)"
       >
-        Создать тест
+        Создать тип обучения
+      </blue-button-full>
+      <blue-button-full
+        :isDisabled="MainValid === false"
+        @click="AddFaculty(name)"
+      >
+        Создать факультет
+      </blue-button-full>
+      <blue-button-full
+        :isDisabled="MainValid === false"
+        @click="AddDiplomType(name)"
+      >
+        Создать тип выдаваемого документа
+      </blue-button-full>
+      <blue-button-full
+        :isDisabled="MainValid === false"
+        @click="AddCourseAdditional(name)"
+      >
+        Создать дополнительно
       </blue-button-full>
     </v-form>
   </section>
@@ -20,9 +44,7 @@
 <script>
 import axios from "axios";
 export default {
-  components: {
-    
-  },
+  components: {},
   props: {
     faculties: Array,
     eduTypes: Array,
@@ -34,75 +56,50 @@ export default {
       // to do:
       // validation
       // valid: false,
-
+      name: "",
       progressMessage: "",
     };
   },
   methods: {
-    async AddTest(Test) {
-      this.progressMessage = "Тест добавляется, ожидайте...";
+    async AddEduTypes(name) {
+      this.progressMessage = "Тип обучения добавляется, ожидайте...";
 
-      const test = await this.AddTestMain(1, Test);
-
-      const info = await this.AddTestInfo(test.data.id, Test);
-
-      for (const question of Test.testQuestions) {
-        const q_res = await this.AddTestQuestion(info.data.id, question);
-        for (const variants of question.testQuestionVariants) {
-          await this.AddQuestionVariant(q_res.data.id, variants);
-        }
-      }
-
-      this.progressMessage = "Тест добавлен!";
-    },
-
-    async AddTestMain(userId, Test) {
-      const facultyId = this.faculties.find(
-        (fac) => fac.name === Test.FacultyName
-      ).id;
-      const URL =
-        "http://localhost:3000/test/addTest/" + userId + "/" + facultyId;
-      const res = await axios.post(URL, {
-        timeToPass: +Test.timeForPass,
-        askAmount: +Test.questionsAmount,
-        authorName: Test.authorName,
-        testName: Test.testName,
+      const URL = "http://localhost:3000/sort/addEduTypes";
+      await axios.post(URL, {
+        name,
       });
-      return res;
-    },
-    async AddTestInfo(testId, Test) {
-      const URL = "http://localhost:3000/test/changeTestInfo/" + testId;
-      const res = await axios.put(URL, {
-        testHeader: Test.descriptionHeader,
-        testDescription: Test.descriptionContent,
-        pointsToPass: +Test.pointForPass,
-      });
-      return res;
-    },
 
-    async AddTestQuestion(TestId, Question) {
-      let formdata = new FormData();
-
-      formdata.append("file", Question.questionImg[0], "questionImg");
-      formdata.append("taskType", Question.questionType);
-      formdata.append("taskTitle", Question.questionHeader);
-
-      const URL = "http://localhost:3000/test/addTestTask/" + TestId;
-      const res = await axios.post(URL, formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      return res;
+      this.progressMessage = "Тип обучения добавлен!";
     },
-    async AddQuestionVariant(QuestionId, Variant) {
-      const URL =
-        "http://localhost:3000/test/addTestTaskAnswerVariant/" + QuestionId;
-      const res = await axios.post(URL, {
-        variantText: Variant.variantText,
-        isRight: Variant.isTrue,
+    async AddFaculty(name) {
+      this.progressMessage = "Факультет добавляется, ожидайте...";
+
+      const URL = "http://localhost:3000/sort/addFaculty";
+      await axios.post(URL, {
+        name,
       });
-      return res;
+
+      this.progressMessage = "Факультет добавлен!";
+    },
+    async AddDiplomType(name) {
+      this.progressMessage = "Тип документа добавляется, ожидайте...";
+
+      const URL = "http://localhost:3000/sort/addDiplomType";
+      await axios.post(URL, {
+        name,
+      });
+
+      this.progressMessage = "Тип документа добавлен!";
+    },
+    async AddCourseAdditional(name) {
+      this.progressMessage = "Дополнительно добавляется, ожидайте...";
+
+      const URL = "http://localhost:3000/sort/addCourseAdditional";
+      await axios.post(URL, {
+        name,
+      });
+
+      this.progressMessage = "Дополнительно добавлен!";
     },
   },
 };
