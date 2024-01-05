@@ -5,6 +5,8 @@
       <BlueButton180 @click="select = 1">Создать курс</BlueButton180>
       <BlueButton180 @click="select = 2">Создать тест</BlueButton180>
       <BlueButton180 @click="select = 3">Создать видеолекцию</BlueButton180>
+      <BlueButton180 @click="select = 4">Создать статью</BlueButton180>
+      <BlueButton180 @click="select = 5">Добавить сортировку</BlueButton180>
     </div>
     <AddCourse
       v-if="
@@ -18,15 +20,35 @@
     >
     </AddCourse>
     <AddTest
-      v-if="select == 2"
+      v-if="select == 2 && faculties"
       v-model="select"
       :faculties="faculties"
     ></AddTest>
     <AddVideolection
-      v-if="select == 3"
+      v-if="
+        select == 3 && faculties && eduTypes && diplomType && courseAdditional
+      "
       v-model="select"
       :faculties="faculties"
+      :eduTypes="eduTypes"
+      :diplomType="diplomType"
+      :courseAdditional="courseAdditional"
     ></AddVideolection>
+    <AddBlog
+      v-if="select == 4 && faculties"
+      v-model="select"
+      :faculties="faculties"
+    ></AddBlog>
+    <AddSort
+      v-if="
+        select == 5 && faculties && eduTypes && diplomType && courseAdditional
+      "
+      v-model="select"
+      :faculties="faculties"
+      :eduTypes="eduTypes"
+      :diplomType="diplomType"
+      :courseAdditional="courseAdditional"
+    ></AddSort>
   </section>
 </template>
 
@@ -36,6 +58,8 @@ import NavBar from "./components/common/NavBar.vue";
 import AddCourse from "./components/AddCourse/AddCourse.vue";
 import AddTest from "./components/AddTest/AddTest.vue";
 import AddVideolection from "./components/AddVideolection/AddVideolection.vue";
+import AddBlog from "./components/AddBlog/AddBlog.vue";
+import AddSort from "./components/AddSort/AddSort.vue";
 
 import axios from "axios";
 
@@ -46,10 +70,12 @@ export default {
     AddCourse,
     AddTest,
     AddVideolection,
+    AddBlog,
+    AddSort,
   },
   data() {
     return {
-      // 0 - admin, 1 - course, 2 - test, 3 - videolection
+      // 0 - admin, 1 - course, 2 - test, 3 - videolection, 4 - blog, 5 - sort
       select: 0,
 
       faculties: false,
