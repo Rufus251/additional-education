@@ -3,23 +3,23 @@
     <Slide v-for="blog in blogs" :key="blog.id">
       <div class="carousel__item">
         <a href="#">
-            <img
-              src="@/components/UI/sliders/slider-img/blogImage.png"
-              alt="Blog Image"
-            />
+          <img
+            :src="`http://localhost:3000/` + blog.blogImg"
+            alt="Blog Image"
+          />
         </a>
 
         <div class="header">
-            <a href="#">
-                <h4>
-                  {{ blog.blogTitle }}
-                </h4>
-            </a>
+          <a href="#">
+            <h4>
+              {{ blog.blogTitle }}
+            </h4>
+          </a>
         </div>
 
         <div class="user">
           <img
-            src="@/components/UI/sliders/slider-img/blogUserImage.png"
+            :src="`http://localhost:3000/` + blog.img"
             alt="Blog User Image"
           />
           <div class="data">
@@ -144,9 +144,9 @@ export default {
 
 <style scoped lang="scss">
 @import url(@/styles/content/base.scss);
-a:hover{
-    opacity: 0.8;
-    transition: 0.4s;
+a:hover {
+  opacity: 0.8;
+  transition: 0.4s;
 }
 .carousel {
   margin-top: 47px;
@@ -175,6 +175,8 @@ a:hover{
       img {
         width: 40px;
         height: 40px;
+
+        border-radius: 50%;
       }
 
       .data {
