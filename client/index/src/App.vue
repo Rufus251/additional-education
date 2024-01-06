@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <NavBar :isAuth="isAuth" :userImgAndName="userImgAndName"></NavBar>
   </div>
   <div class="content">
     <HeaderScene></HeaderScene>
@@ -77,6 +77,9 @@ export default {
   },
   data() {
     return {
+      isAuth: false,
+      userImgAndName: false,
+
       courses: false,
       faculties: false,
       lowPrice: false,
@@ -152,32 +155,53 @@ export default {
         const blogs = await axios.get(blogLink);
         this.blogs = blogs.data;
 
-        let authorLink = 'http://localhost:3000/user/';
-        let imgAndNameLink = 'http://localhost:3000/user/userImgAndName/';
+        let authorLink = "http://localhost:3000/user/";
+        let imgAndNameLink = "http://localhost:3000/user/userImgAndName/";
 
-        this.authorsImgAndName = []
+        this.authorsImgAndName = [];
 
-        let newBlogs = []
-        for await (let blog of this.blogs){
-          let link = authorLink + blog.authorId
+        let newBlogs = [];
+        for await (let blog of this.blogs) {
+          let link = authorLink + blog.authorId;
           const author = await axios.get(link);
 
-          link = imgAndNameLink + author.data.id
-          const imgAndName = await axios.get(link)
+          link = imgAndNameLink + author.data.id;
+          const imgAndName = await axios.get(link);
           blog = {
             ...blog,
-            ...imgAndName.data
-          }
+            ...imgAndName.data,
+          };
           // date change
-          const date = blog.createdAt
-          blog.createdAt = date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4) 
-          blog.name = "Федоров Сергей"
-          newBlogs.push(blog)
+          const date = blog.createdAt;
+          blog.createdAt =
+            date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(0, 4);
+          blog.name = "Федоров Сергей";
+          newBlogs.push(blog);
         }
-        this.blogs = newBlogs
+        this.blogs = newBlogs;
       } catch (error) {
         console.log(error);
       }
+    },
+    async auth() {
+      const jwt = localStorage.getItem("accessToken");
+      if (!jwt) {
+        return 0;
+      }
+      const checkJwtUrl = "http://localhost:3000/auth/checkJwt";
+      const res = await axios.post(checkJwtUrl, {
+        jwt,
+      });
+      if (res.data.user) {
+        localStorage.setItem("accessToken", res.data.user.jwt);
+
+        const getImageUrl = "http://localhost:3000/user/userImgAndName/" + res.data.user.id
+        const res2 = await axios.get(getImageUrl);
+        
+        this.isAuth = true;
+        this.userImgAndName = res2.data;
+      }
+      return res;
     },
   },
   async created() {
@@ -187,6 +211,7 @@ export default {
     await this.getPopular();
     await this.getVideolections();
     await this.getBlogsAndAuthor();
+    await this.auth();
   },
 };
 </script>
