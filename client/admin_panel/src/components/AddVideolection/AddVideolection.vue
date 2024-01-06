@@ -50,6 +50,7 @@
         variant="underlined"
       ></v-file-input>
 
+      {{ progressMessage }}
       <blue-button-full
         :isDisabled="MainValid === false"
         @click="AddVideolection(Videolection)"
@@ -74,7 +75,10 @@ export default {
       // validation
       // valid: false,
 
+      progressMessage: "",
+      
       Videolection: {
+
         FacultyName: "",
         videolectionName: "Урок 1. Вступление",
         descriptionHeader: "Описание курса",
