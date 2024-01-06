@@ -7,7 +7,7 @@
   >
     <Slide v-for="course in sortedCourses" :key="course.id">
       <div class="carousel__item">
-        <img src="@/assets/courseImage1.png" alt="Course Image" />
+        <img src="./slider-img/courseImage1.png" alt="Course Image" />
         <div class="lowPrice" v-if="additional == `Low Price`">
           <img src="./slider-img/dollar.png" alt="Low Price Image" />
           <h5>Low Price</h5>
