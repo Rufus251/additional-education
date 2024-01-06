@@ -33,7 +33,7 @@
                 />
                 <path d="M25 12L45 32L25 52V12Z" fill="white" />
               </svg>
-              <img src="./../assets/Video.png" alt="video" />
+              <img :src="`http://localhost:3000/` + video.lectionImg" alt="video image" />
             </a>
           </div>
         </div>
