@@ -7,15 +7,36 @@
   >
     <Slide v-for="course in sortedCourses" :key="course.id">
       <div class="carousel__item">
-        <img src="./slider-img/courseImage1.png" alt="Course Image" />
+        <img
+          v-if="course.facultyId === 2"
+          src="./slider-img/law.png"
+          alt="Course Image"
+        />
+        <img
+          v-else-if="course.facultyId === 3"
+          src="./slider-img/medicine.png"
+          alt="Course Image"
+        />
+        <img
+          v-else-if="course.facultyId === 5"
+          src="./slider-img/economy.png"
+          alt="Course Image"
+        />
+        <img
+          v-else-if="course.facultyId === 6"
+          src="./slider-img/business.png"
+          alt="Course Image"
+        />
+        <img v-else src="./slider-img/pedagogics.png" alt="Course Image" />
+
         <div class="lowPrice" v-if="additional == `Low Price`">
           <img src="./slider-img/dollar.png" alt="Low Price Image" />
           <h5>Low Price</h5>
         </div>
         <div class="top" v-if="additional == `Top`">
-            <img src="./slider-img/fire.png" alt="Top Image" />
-            <h5>Top</h5>
-          </div>
+          <img src="./slider-img/fire.png" alt="Top Image" />
+          <h5>Top</h5>
+        </div>
         <div class="type">
           <p class="text1">
             {{
@@ -30,16 +51,7 @@
         </header>
         <div class="timeAndBtn">
           <div class="timeAndBtn__time">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path d="M12 6V14L16.5 17.5" stroke="#3D8BE4" />
-              <circle cx="12" cy="12" r="11.5" stroke="#3D8BE4" />
-            </svg>
+            <img src="./slider-img/clock.png" alt="Clock icon" />
             <p class="caption">От {{ course.minHours }} ак. ч.</p>
           </div>
           <div class="timeAndBtn__btn">
@@ -189,7 +201,7 @@ export default {
       background-color: #fff;
       border-radius: 5px;
 
-      img{
+      img {
         height: 20px;
         width: 20px;
       }
@@ -234,6 +246,11 @@ export default {
         align-items: center;
 
         gap: 8px;
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
       }
       @media (max-width: 450px) {
         flex-direction: column;
