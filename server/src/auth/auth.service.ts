@@ -74,32 +74,72 @@ export class AuthService {
     }
 
     async checkJwt(dto: CheckJwt) {
-        const res = this.jwtService.checkToken(dto.jwt)
-        const user = await this.databaseService.user.findFirst({
-            where: {
-                OR: [
-                    {
+        try {
+            const res = this.jwtService.checkToken(dto.jwt)
+            let user = await this.databaseService.user.findFirst({
+                where: {
+                    OR: [
+                        {
+                            phoneNum: res.phoneOrEmail
+                        },
+                        {
+                            email: res.phoneOrEmail
+                        }
+                    ]
+                }
+            })
+            const jwt = this.jwtService.generateJwt(res.phoneOrEmail)
+
+            if (user.email !== null) {
+                user = await this.databaseService.user.update({
+                    where: {
+                        email: res.phoneOrEmail
+                    },
+                    data: {
+                        jwt
+                    }
+                })
+            }
+            else if (user.phoneNum !== null) {
+                user = await this.databaseService.user.update({
+                    where: {
                         phoneNum: res.phoneOrEmail
                     },
-                    {
-                        email: res.phoneOrEmail
+                    data: {
+                        jwt
                     }
-                ]
+                })
             }
-        })
-        return { ...res, user }
+            return { ...res, user }
+
+        } catch (error) {
+            return error
+        }
     }
 
     async loginUserPhone(dto: LoginUserPhone) {
         try {
-            const user = await this.databaseService.user.findFirst({
+            let user = await this.databaseService.user.findFirst({
                 where: {
                     phoneNum: dto.phoneNum
                 }
             })
 
+            if (!user) {
+                throw new HttpException('User Not Found', HttpStatus.NOT_FOUND)
+            }
+
             const correctPassword = bcrypt.compareSync(dto.password, user.password)
             if (correctPassword) {
+                const jwt = this.jwtService.generateJwt(user.phoneNum)
+                user = await this.databaseService.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        jwt
+                    }
+                })
                 return user
             }
             else {
@@ -112,7 +152,7 @@ export class AuthService {
 
     async loginUserEmail(dto: LoginUserEmail) {
         try {
-            const user = await this.databaseService.user.findFirst({
+            let user = await this.databaseService.user.findFirst({
                 where: {
                     email: dto.email
                 }
@@ -124,6 +164,15 @@ export class AuthService {
 
             const correctPassword = bcrypt.compareSync(dto.password, user.password)
             if (correctPassword) {
+                const jwt = this.jwtService.generateJwt(user.email)
+                user = await this.databaseService.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        jwt
+                    }
+                })
                 return user
             }
             else {

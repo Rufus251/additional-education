@@ -3,6 +3,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { ChangeUserData } from './dto/change-user-data.dto';
 import { ChangeUserInfo } from './dto/change-user-info.dto';
 import { FilesService } from 'src/files/files.service';
+import * as bcrypt from "bcrypt";
 @Injectable()
 export class UserService {
     constructor(private readonly databaseService: DatabaseService, 
@@ -51,12 +52,14 @@ export class UserService {
 
     async changeUserData(id: number, dto: ChangeUserData) {
         try {
+            const hashPass = await bcrypt.hash(dto.password, 7)
             const res = await this.databaseService.user.update({
                 where: {
                     id
                 },
                 data: {
-                    ...dto
+                    ...dto,
+                    password: hashPass
                 }
             })
             return res
