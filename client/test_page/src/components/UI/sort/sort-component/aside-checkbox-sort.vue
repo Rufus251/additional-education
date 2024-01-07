@@ -1,24 +1,14 @@
 <template>
-  <section class="sortTypes" v-for="sType in types" :key="sType.name">
+  <section class="sortTypes" v-for="(sType, i) in types" :key="i">
     <input
       type="checkbox"
       :id="`sType-animation` + sType.name"
       class="sType-animation"
     />
-
     <label :for="`sType-animation` + sType.name">
       <div class="name" @click="sType.isOpen = !sType.isOpen">
         <header class="text1">{{ sType.name }}</header>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="12"
-          viewBox="0 0 22 12"
-          fill="none"
-          transform="rotate(180)"
-        >
-          <path d="M21 11L11 1L1 11" stroke="black" />
-        </svg>
+        <img src="./images/arrow.png" alt="arrow icon" />
       </div>
 
       <ul class="checkboxes" v-if="sType.isOpen">
@@ -26,10 +16,9 @@
           <v-checkbox
             class="text1 mt-5"
             :label="content.name"
-            :value="content.name"
-            v-model="checkedCheckbox"
+            :value="content.id"
+            v-model="checkedCheckbox[i]"
             hide-details
-            @change="emitCheckboxes"
           >
           </v-checkbox>
         </li>
@@ -47,12 +36,15 @@ export default {
   },
   data() {
     return {
-      checkedCheckbox: [],
+      checkedCheckbox: [[],[],[],[]],
     };
   },
-  methods: {
-    emitCheckboxes() {
-      this.$emit("update:modelValue", this.checkedCheckbox);
+  watch: {
+    checkedCheckbox: {
+      handler(value) {
+        this.$emit("update:modelValue", value || []);
+      },
+      deep: true,
     },
   },
 };
@@ -63,8 +55,8 @@ export default {
   display: none;
 
   &:checked {
-    & + label > .name > svg {
-      transform: rotate(360deg);
+    & + label > .name > img {
+      transform: rotate(-180deg);
 
       transition: 0.2s;
     }
@@ -83,7 +75,7 @@ export default {
         opacity: 0.8;
       }
 
-      & > svg {
+      & > img {
         transition: 0.2s;
         transform-origin: 50% 50%;
       }
