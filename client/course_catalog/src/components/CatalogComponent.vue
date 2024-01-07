@@ -26,22 +26,36 @@
           <p class="text1">
             {{ faculties.find((elem) => elem.id == course.facultyId).name }}
           </p>
-          <img src="../assets/Education.png" alt="course image" />
+          <img
+            v-if="course.facultyId === 2"
+            src="./common/images/courseImages/law.png"
+            alt="Course Image"
+          />
+          <img
+            v-else-if="course.facultyId === 3"
+            src="./common/images/courseImages/medicine.png"
+            alt="Course Image"
+          />
+          <img
+            v-else-if="course.facultyId === 5"
+            src="./common/images/courseImages/economy.png"
+            alt="Course Image"
+          />
+          <img
+            v-else-if="course.facultyId === 6"
+            src="./common/images/courseImages/business.png"
+            alt="Course Image"
+          />
+          <img
+            v-else
+            src="./common/images/courseImages/pedagogics.png"
+            alt="Course Image"
+          />
         </header>
         <h4>{{ course.courseName }}</h4>
         <footer>
           <div class="time">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path d="M12 6V14L16.5 17.5" stroke="#3D8BE4" />
-              <circle cx="12" cy="12" r="11.5" stroke="#3D8BE4" />
-            </svg>
-
+            <img src="./common/images/clock.png" alt="clock icon" />
             <p class="caption">от {{ course.minHours }} ак.ч.</p>
           </div>
 
@@ -65,15 +79,13 @@ export default {
     faculties: Array,
     diplomType: Array,
     courseAdditional: Array,
-    courseToAdditional: Array
+    courseToAdditional: Array,
   },
   data() {
     return {
       downloadMoreButton: 10,
       autocompleteValue: "",
-      checkboxSwitcher: false,
-      facultySort: "",
-      checkbox: [],
+      checkbox: [[], [], [], []],
 
       types: [
         {
@@ -104,113 +116,51 @@ export default {
   computed: {
     sortCourses() {
       let courses = this.courses;
-
       const autocompleteValue = this.autocompleteValue;
-      if (autocompleteValue != "" && autocompleteValue != null) {
+
+      if (autocompleteValue) {
         courses = courses.filter((elem) =>
           elem.courseName.includes(autocompleteValue)
         );
 
-        return courses
+        return courses;
       }
 
       const checkbox = this.checkbox;
-      let sortedArrays = [this.eduTypes, this.faculties, this.diplomType, this.courseAdditional];
-      let SortedCoursesArray = [];
-
-      if (checkbox.length !== 0) {
-        sortedArrays.forEach((sortArray) => {
-          let sortedCourses = [];
-          checkbox.forEach((checkboxValue) => {
-            //eduType filter
-            const eduType = sortArray.find(
-              (type) => type.name == checkboxValue
-            );
-            if (eduType) {
-              const preSortedCourses = courses.filter((course) => {
-                if (course.educationTypeId == eduType.id) {
-                  return true;
-                }
-              });
-              sortedCourses = sortedCourses.concat(preSortedCourses);
-              sortedCourses = [...new Set(sortedCourses)];
-            }
-
-            // faculty filter
-            const facult = sortArray.find(
-              (faculty) => faculty.name == checkboxValue
-            );
-            if (facult) {
-              const preSortedCourses = courses.filter((course) => {
-                if (course.facultyId == facult.id) {
-                  return true;
-                }
-              });
-              sortedCourses = sortedCourses.concat(preSortedCourses);
-              sortedCourses = [...new Set(sortedCourses)];
-            }
-
-            // diplomType filter
-            const dipType = sortArray.find(
-              (diplType) => diplType.name == checkboxValue
-            );
-            if (dipType) {
-              const preSortedCourses = courses.filter((course) => {
-                if (course.diplomTypeId == dipType.id) {
-                  return true;
-                }
-              });
-              sortedCourses = sortedCourses.concat(preSortedCourses);
-              sortedCourses = [...new Set(sortedCourses)];
-            }
-
-            // additional filter 
-            const courseAdditional = sortArray.find(
-              (additional) => additional.name == checkboxValue
-            );
-            if (courseAdditional) {
-              const preSortedCourses = courses.filter((course) => {
-                const courseToAdditional = this.courseToAdditional.filter((cta) => cta.courseAdditionalId == courseAdditional.id)
-                if (course.id == courseToAdditional.coursesId){
-                  return true
-                }
-              });
-              sortedCourses = sortedCourses.concat(preSortedCourses);
-              sortedCourses = [...new Set(sortedCourses)];
-            }
-
-          });
-
-          // push checked checkboxes in section (faculties, for example)
-          SortedCoursesArray.push(sortedCourses);
-        });
-        
-        // deleting zero arrays (not checked sort setting)
-        for (let i = 0; i < SortedCoursesArray.length; i++) {
-          if (SortedCoursesArray[i].length == 0) {
-            SortedCoursesArray.splice(i, 1);
-            i--;
-          }
-        }
-
-        // Arrays intersection
-        while (SortedCoursesArray.length > 1) {
-          const intersection = SortedCoursesArray[0].filter((x) =>
-            SortedCoursesArray[1].includes(x)
-          );
-          SortedCoursesArray.push(intersection);
-          SortedCoursesArray.shift();
-          SortedCoursesArray.shift();
-        }
-        return SortedCoursesArray[0];
-      } else {
-        return courses;
+      if (checkbox[0].length) {
+        courses = courses.filter((course) =>
+          checkbox[0].includes(course.educationTypeId)
+        );
       }
+      if (checkbox[1].length) {
+        courses = courses.filter((course) =>
+          checkbox[1].includes(course.facultyId)
+        );
+      }
+      if (checkbox[2].length) {
+        courses = courses.filter((course) =>
+          checkbox[2].includes(course.diplomTypeId)
+        );
+      }
+      if (checkbox[3].length) {
+        let courseToAdditional = this.courseToAdditional;
+        courseToAdditional = courseToAdditional.filter((cta) =>
+          checkbox[3].includes(cta.courseAdditionalId)
+        );
+        courseToAdditional = courseToAdditional.map((cta) => cta.coursesId);
+
+        courses = courses.filter((course) =>
+          courseToAdditional.includes(course.id)
+        );
+      }
+      return courses;
     },
+
     sliceSortCourses() {
       const sortedCourses = this.sortCourses;
       return sortedCourses.slice(0, this.downloadMoreButton);
     },
+
     sortCoursesLength() {
       const sortedCourses = this.sortCourses;
       return sortedCourses.length;
@@ -301,6 +251,11 @@ h2 {
       justify-content: space-between;
 
       img {
+        width: 115px;
+        height: 70px;
+
+        border-radius: 8px;
+
         @media (max-width: 400px) {
           display: none;
         }

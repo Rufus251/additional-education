@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <NavBar :isAuth="isAuth" :userImgAndName="userImgAndName"></NavBar>
   </div>
   <div class="content">
     <CatalogComponent
@@ -35,6 +35,8 @@ export default {
   },
   data() {
     return {
+      isAuth:false,
+      
       courses: false,
       eduTypes: false,
       faculties: false,
@@ -108,6 +110,26 @@ export default {
         console.log(error);
       }
     },
+    async auth() {
+      const jwt = localStorage.getItem("accessToken");
+      if (!jwt) {
+        return 0;
+      }
+      const checkJwtUrl = "http://localhost:3000/auth/checkJwt";
+      const res = await axios.post(checkJwtUrl, {
+        jwt,
+      });
+      if (res.data.user) {
+        localStorage.setItem("accessToken", res.data.user.jwt);
+
+        const getImageUrl = "http://localhost:3000/user/userImgAndName/" + res.data.user.id
+        const res2 = await axios.get(getImageUrl);
+        
+        this.isAuth = true;
+        this.userImgAndName = res2.data;
+      }
+      return res;
+    },
   },
   async created() {
     await this.getCourses();
@@ -116,6 +138,7 @@ export default {
     await this.getDiplomTypes();
     await this.getCourseAdditional();
     await this.getCourseToAdditional();
+    await this.auth();
   },
 };
 </script>
