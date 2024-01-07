@@ -16,6 +16,7 @@ import CheckboxSwitcher from "./sort/sort-elements/checkbox-switcher.vue"
 import CourseSlider from "./sliders/course-slider.vue"
 import DiplomSlider from "./sliders/diplom-slider.vue"
 import BlogSlider from "./sliders/blog-slider.vue"
+import VideolectionsSlider from "./sliders/videolections-slider.vue"
 
 import ManagerForm from "./forms/manager-form.vue"
 export default [
@@ -32,5 +33,6 @@ export default [
     CourseSlider,
     DiplomSlider,
     BlogSlider,
-    ManagerForm
+    ManagerForm,
+    VideolectionsSlider
 ]
