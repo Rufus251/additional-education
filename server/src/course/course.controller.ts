@@ -23,7 +23,14 @@ export class CourseController {
     @Get('courses')
     @ApiResponse({ status: 200, description: 'Return courses' })
     async getCourses() {
-        const res = this.courseSerice.getCourse()
+        const res = this.courseSerice.getCourses()
+        return res
+    }
+
+    @Get('course/:courseId')
+    @ApiResponse({ status: 200, description: 'Return course/id' })
+    async getCourse(@Param("courseId") courseId: number) {
+        const res = this.courseSerice.getCourse(+courseId)
         return res
     }
 
@@ -37,7 +44,14 @@ export class CourseController {
     @Get('coursesInfo')
     @ApiResponse({ status: 200, description: 'Return courseInfos' })
     async getCoursesInfo() {
-        const res = this.courseSerice.getCourseInfo()
+        const res = this.courseSerice.getCourseInfos()
+        return res
+    }
+
+    @Get('courseInfo/:courseId')
+    @ApiResponse({ status: 200, description: 'Return course/id' })
+    async getCourseInfo(@Param("courseId") courseId: number) {
+        const res = this.courseSerice.getCourseInfo(+courseId)
         return res
     }
 
@@ -77,6 +91,13 @@ export class CourseController {
         return res
     }
 
+    @Get('authorInfos/:courseId')
+    @ApiResponse({ status: 200, description: 'Return course/id' })
+    async getAuthorInfos(@Param("courseId") courseId: number) {
+        const res = this.courseSerice.getAuthorInfos(+courseId)
+        return res
+    }
+
     @Post('addAuthorInfo/:courseInfoId')
     @ApiResponse({ status: 200, description: 'Return AuthorInfo' })
     @UsePipes(new ValidationPipe())
@@ -97,6 +118,13 @@ export class CourseController {
     @ApiResponse({ status: 200, description: 'Return sections' })
     async getSection() {
         const res = this.courseSerice.getSections()
+        return res
+    }
+
+    @Get('sections/:courseId')
+    @ApiResponse({ status: 200, description: 'Return section/id' })
+    async getSectionsById(@Param("courseId") courseId: number) {
+        const res = this.courseSerice.getSectionsById(+courseId)
         return res
     }
 
@@ -123,6 +151,13 @@ export class CourseController {
         return res
     }
 
+    @Get('modules/:sectionId')
+    @ApiResponse({ status: 200, description: 'Return module/id' })
+    async getModulesById(@Param("sectionId") sectionId: number) {
+        const res = this.courseSerice.getModulesById(+sectionId)
+        return res
+    }
+
     @Post('addModule/:sectionId')
     @ApiResponse({ status: 200, description: 'Return module' })
     @UsePipes(new ValidationPipe())
@@ -135,6 +170,14 @@ export class CourseController {
     @ApiResponse({ status: 200, description: 'Return module' })
     async deleteModule(@Param('id') id: number) {
         const res = this.courseSerice.deleteModule(+id)
+        return res
+    }
+
+
+    @Get('tasks/:moduleId')
+    @ApiResponse({ status: 200, description: 'Return tasks/id' })
+    async getTasksById(@Param("moduleId") moduleId: number) {
+        const res = this.courseSerice.getTasksById(+moduleId)
         return res
     }
 

@@ -20,8 +20,17 @@ export class CourseService {
         private readonly fileService: FilesService) { }
 
     // course CRUD
-    async getCourse() {
+    async getCourses() {
         const res = await this.databaseService.courses.findMany()
+        return res
+    }
+
+    async getCourse(id: number) {
+        const res = await this.databaseService.courses.findUnique({
+            where: {
+                id
+            }
+        })
         return res
     }
 
@@ -59,8 +68,17 @@ export class CourseService {
         }
     }
 
-    async getCourseInfo() {
+    async getCourseInfos() {
         const res = await this.databaseService.courseInfo.findMany()
+        return res
+    }
+
+    async getCourseInfo(id: number) {
+        const res = await this.databaseService.courseInfo.findUnique({
+            where: {
+                id
+            }
+        })
         return res
     }
 
@@ -138,6 +156,19 @@ export class CourseService {
         return res
     }
 
+    async getAuthorInfos(id: number) {
+        try {
+            const res = await this.databaseService.authorInfo.findMany({
+                where: {
+                    courseInfoId: id
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
+    }
+
     async addAuthorInfo(courseInfoId: number, dto: addAuthorInfo) {
         try {
             const res = await this.databaseService.authorInfo.create({
@@ -173,6 +204,19 @@ export class CourseService {
     async getSections() {
         const res = await this.databaseService.section.findMany()
         return res
+    }
+
+    async getSectionsById(id: number) {
+        try {
+            const res = await this.databaseService.section.findMany({
+                where: {
+                    courseInfoId: id
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
     }
 
     async addSection(courseInfoId: number, dto: addSection) {
@@ -227,6 +271,19 @@ export class CourseService {
         return res
     }
 
+    async getModulesById(id: number) {
+        try {
+            const res = await this.databaseService.modules.findMany({
+                where: {
+                    sectionId: id
+                }
+            })
+            return res
+        } catch (error) {
+            return error
+        }
+    }
+
     async addModule(sectionId: number, dto: addModule) {
         try {
             const res = await this.databaseService.modules.create({
@@ -259,6 +316,35 @@ export class CourseService {
         }
     }
 
+
+    async getTasksById(id: number) {
+        let array = []
+        let res1 = await this.databaseService.videoLesson.findMany({
+            where: {
+                moduleId: id
+            }
+        })
+        array.push(...res1)
+        let res2 = await this.databaseService.lectionLesson.findMany({
+            where: {
+                moduleId: id
+            }
+        })
+        array.push(...res2)
+        let res3 = await this.databaseService.testLesson.findMany({
+            where: {
+                moduleId: id
+            }
+        })
+        array.push(...res3)
+        let res4 = await this.databaseService.examLesson.findMany({
+            where: {
+                moduleId: id
+            }
+        })
+        array.push(...res4)
+        return array
+    }
     // video lection CRUD
     async getVideoLection() {
         const res = await this.databaseService.videoLesson.findMany()
