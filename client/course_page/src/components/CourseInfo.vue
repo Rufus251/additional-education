@@ -8,10 +8,10 @@
 
         <div class="content">
           <h5>Автор курса</h5>
-          <h3>{{ authorInfo.authorName }}</h3>
+          <h3>{{ courseInfoProp.authorName }}</h3>
           <ul>
-            <li v-for="about in authorInfo.aboutAuthor" :key="about">
-              <p class="text1">{{ about }}</p>
+            <li v-for="info in authorInfoProp" :key="info.id">
+              <p class="text1">{{ info.aboutAuthor }}</p>
             </li>
           </ul>
         </div>
@@ -23,9 +23,7 @@
         <div class="target__text">
           <h3>Цель курса</h3>
           <p class="text1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+            {{ courseInfoProp.courseGoal }}
           </p>
         </div>
         <img src="../assets/courseTargetHug.png" alt="additional Image" />
@@ -34,13 +32,13 @@
         <div class="adBlock">
           <h3>Форма обучения</h3>
           <p class="text1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed dо.
+            {{ courseInfoProp.educationForm }}
           </p>
         </div>
         <div class="adBlock">
           <h3>Вид итоговой аттестации</h3>
           <p class="text1">
-            Итоговое тестирование из 20 вопросов с вариантами ответов.
+            {{ courseInfoProp.certificationType }}
           </p>
         </div>
       </div>
@@ -49,22 +47,11 @@
 </template>
 
 <script>
-// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
 export default {
   name: "App",
-  components: {},
-  data() {
-    return {
-      authorInfo: {
-        authorName: "Буланов Максим Владимирович",
-        aboutAuthor: [
-          "Профессиональный тьютор",
-          "Проектирует образовательные программы",
-          "Сооснователь проектов Место и образовательного бюро Розетка",
-          "Помогает ученикам найти собственный путь развития",
-        ],
-      },
-    };
+  props: {
+    courseInfoProp: Object,
+    authorInfoProp: Array,
   },
 };
 </script>

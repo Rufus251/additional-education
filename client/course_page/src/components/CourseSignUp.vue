@@ -2,9 +2,9 @@
   <div class="signupContent">
     <h2>Записаться на курс</h2>
     <div class="priceList">
-      <div class="card" v-for="card in priceList" :key="card">
+      <div class="card" v-for="card in sectionsProp" :key="card">
         <div class="card__header">
-          <h3>{{ card.hours }}</h3>
+          <h3>{{ card.hoursAmount }}</h3>
           <p class="text2">аккадемических часов</p>
         </div>
         <hr />
@@ -27,32 +27,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      priceList: [
-        {
-          hours: "250",
-          cost: 6000,
-          cashback: 300,
-        },
-        {
-          hours: "510",
-          cost: 6000,
-          cashback: 300,
-        },
-        {
-          hours: "700",
-          cost: 6000,
-          cashback: 300,
-        },
-        {
-          hours: "1400",
-          cost: 6000,
-          cashback: 300,
-        },
-      ],
-    };
-  },
+  props:{
+    sectionsProp: Array
+  }
 };
 </script>
 

@@ -1,148 +1,105 @@
 <template>
-  <div class="educationPlanContent">
-    <div class="header">
+  <section>
+    <header>
       <div class="header__text">
         <h2>Учебный план</h2>
         <p class="text2">курса повышения квалификации</p>
       </div>
 
-      <div class="btn">
-        <blue-button180 :href="`#`">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M19 9H15V3H9V9H5L12 17L19 9ZM4 19H20V21H4V19Z"
-              fill="white"
-            />
-          </svg>
-          Скачать
-        </blue-button180>
-      </div>
-    </div>
+      <blue-button180 :href="`#`">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M19 9H15V3H9V9H5L12 17L19 9ZM4 19H20V21H4V19Z"
+            fill="white"
+          />
+        </svg>
+        Скачать
+      </blue-button180>
+    </header>
 
-    <div class="main">
+    <main>
       <div class="btns">
-        <div class="btn" v-for="btn in buttonsName" :key="btn">
+        <div class="btn" v-for="(btn, i) in sectionsProp" :key="btn">
           <input
             v-model="sortType"
-            :id="`${btn}`"
+            :id="btn + i"
             type="radio"
             name="type"
-            :value="`${btn}`"
+            :value="btn.hoursAmount"
           />
-          <div class="label">
-            <label :for="`${btn}`" @click="displayId = btn">
-              <h5>
-                {{ btn }}
-              </h5>
-            </label>
-          </div>
+          <label :for="btn + i">
+            <h5>{{ btn.hoursAmount }} ак. ч.</h5>
+          </label>
         </div>
       </div>
 
-      <div class="modules">
-        <div class="modules__header">
-          <p class="text1">Название модуля, темы</p>
-          <p class="text1">Кол-во часов</p>
-          <p class="text1"></p>
-        </div>
-
-        <!-- moduule because module is buged -->
-        <div class="module" v-for="moduule in modules" :key="moduule.name">
-          <hr />
-          <div class="module__header">
-            <h5>{{ moduule.name }}</h5>
-            <h5>{{ moduule.hours }} ак.ч.</h5>
-            <svg
-              @click="moduule.isHiden = !moduule.isHiden"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="13"
-              viewBox="0 0 24 13"
-              fill="none"
-            >
-              <path d="M1 1L12 12L23 1" stroke="black" />
-            </svg>
-          </div>
-          <div class="ContentHide" v-if="!moduule.isHiden">
-            <div
-              class="module__content"
-              v-for="theme in moduule.themes"
-              :key="theme"
-            >
-              <p class="text3">{{ theme }}</p>
+      <div class="modules__header">
+        <p class="text1">Название модуля, темы</p>
+        <p class="text1">Кол-во часов</p>
+        <p class="text1"></p>
+      </div>
+      <div class="modules" v-for="section in sectionsProp" :key="section.id">
+        <div class="switch_hide" v-if="section.hoursAmount == sortType">
+          <div
+            class="module"
+            v-for="moduule in section.modules"
+            :key="moduule.name"
+          >
+            <hr />
+            <div class="module__header">
+              <h5>{{ moduule.moduleName }}</h5>
+              <h5>{{ moduule.hoursAmount }} ак.ч.</h5>
+              <input
+                v-model="isOpen"
+                :id="moduule.id"
+                type="checkbox"
+                name="isOpen"
+                :value="moduule.id"
+              />
+              <label :for="moduule.id">
+                <img src="../assets/arrow.png" alt="arrow icon" />
+              </label>
             </div>
+            <transition name="slide-fade">
+              <ul v-if="isOpen.includes(moduule.id)">
+                <li
+                  class="module__content"
+                  v-for="task in moduule.tasks"
+                  :key="task.id"
+                >
+                  <p class="text3">{{ task.lessonName }}</p>
+                </li>
+              </ul>
+            </transition>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </main>
+  </section>
 </template>
 
 <script>
 export default {
+  props: {
+    sectionsProp: Array,
+  },
   data() {
     return {
-      buttonsName: ["250 ак.ч.", "510 ак.ч.", "700 ак.ч.", "1400 ак.ч."],
-      sortType: "250 ак.ч.",
-      modules: [
-        {
-          name: "Модуль 1. Педагогика",
-          hours: 50,
-          isHiden: false,
-          themes: [
-            "Тема 1. Основы педагогики",
-            "Тема 2. Педагогика в современном мире",
-            "Тема 3. Основы педагогики",
-            "Тема 4. Педагогика в современном мире",
-          ],
-        },
-        {
-          name: "Модуль 2. Педагогика",
-          hours: 100,
-          isHiden: false,
-          themes: [
-            "Тема 1. Основы педагогики",
-            "Тема 2. Педагогика в современном мире",
-            "Тема 3. Основы педагогики",
-            "Тема 4. Педагогика в современном мире",
-          ],
-        },
-        {
-          name: "Модуль 3. Педагогика",
-          hours: 200,
-          isHiden: true,
-          themes: [
-            "Тема 1. Основы педагогики",
-            "Тема 2. Педагогика в современном мире",
-            "Тема 3. Основы педагогики",
-            "Тема 4. Педагогика в современном мире",
-          ],
-        },
-        {
-          name: "Модуль 4. Педагогика",
-          hours: 300,
-          isHiden: true,
-          themes: [
-            "Тема 1. Основы педагогики",
-            "Тема 2. Педагогика в современном мире",
-            "Тема 3. Основы педагогики",
-            "Тема 4. Педагогика в современном мире",
-          ],
-        },
-      ],
+      sortType: "250",
+      isOpen: [],
     };
   },
 };
 </script>
 
 <style scoped lang="scss">
-.educationPlanContent {
+section {
   max-width: 1200px;
   width: 100%;
 
@@ -156,7 +113,7 @@ export default {
     padding-right: 10px;
   }
 }
-.header {
+header {
   display: flex;
   justify-content: space-between;
 
@@ -192,13 +149,19 @@ export default {
   input {
     display: none;
   }
-  input:checked ~ .label {
+  input:checked ~ label {
+    display: block;
+
+    height: 24px;
+
     color: #3d8be4;
 
     padding-bottom: 7px;
     border-bottom: 2px solid #3d8be4;
   }
   label {
+    height: 33px;
+
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -240,12 +203,27 @@ export default {
         }
       }
 
-      svg {
+      input {
+        display: none;
+
+        &:checked + label > img {
+          transform: rotate(0deg);
+
+          transition: 0.2s;
+        }
+      }
+
+      img {
+        transform: rotate(-180deg);
+        transition: 0.2s;
         &:hover {
           cursor: pointer;
           opacity: 0.8;
         }
       }
+    }
+    ul {
+      list-style: none;
     }
     &__content {
       margin-top: 20px;
@@ -265,5 +243,15 @@ export default {
       }
     }
   }
+}
+.slide-fade-enter-active {
+  transition: all .5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter-from, .slide-fade-leave-to{
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
